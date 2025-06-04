@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f75b24253efe8f245b0cd62af0aaeff9, type: 3}
+  m_Name: ScoutHelmet
+  m_EditorClassIdentifier: 
+  ID: 40106
+  ItemName: "\uC815\uCC30\uBCD1\uC758 \uD22C\uAD6C"
+  ItemDescription: "\uBBFC\uCCA9\uD55C \uC815\uCC30\uBCD1\uC744 \uC704\uD55C \uD5EC\uBA67,
+    \uC774\uB3D9 \uC18D\uB3C4\uC640 \uD68C\uD53C \uB2A5\uB825\uC744 \uAC15\uD654\uD574\uC900\uB2E4."
+  ItemType: 1
+  ItemSprite: {fileID: 21300000, guid: 67eaf2a7d1686074684270d1821c55cb, type: 3}
+  IsStackable: 0
+  Stats:
+  - StatType: 0
+    ModifierType: 0
+    Value: 75
+  - StatType: 5
+    ModifierType: 0
+    Value: 3
+  ItemGrade: 0
+  MaxStack: 0

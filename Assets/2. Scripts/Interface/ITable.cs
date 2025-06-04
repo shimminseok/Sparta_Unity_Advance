@@ -1,0 +1,9 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+public interface ITable
+{
+    public          Type Type { get; }
+    public abstract void CreateTable();
+}

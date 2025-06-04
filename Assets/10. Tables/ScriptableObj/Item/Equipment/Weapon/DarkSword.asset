@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f75b24253efe8f245b0cd62af0aaeff9, type: 3}
+  m_Name: DarkSword
+  m_EditorClassIdentifier: 
+  ID: 50102
+  ItemName: "\uC5B4\uB460 \uAE30\uC0AC\uC758 \uC7A5\uAC80"
+  ItemDescription: "\uC804\uC124\uC801\uC778 \uC5B4\uB460\uAE30\uC0AC\uAC00 \uC0AC\uC6A9\uD588\uB2E4\uACE0
+    \uC54C\uB824\uC9C0\uB294 \uC7A5\uAC80"
+  ItemType: 1
+  ItemSprite: {fileID: 21300000, guid: d5ab6ea498c4d064781b7c052c6b6a2a, type: 3}
+  IsStackable: 0
+  Stats:
+  - StatType: 2
+    ModifierType: 0
+    Value: 500
+  ItemGrade: 0
+  MaxStack: 0

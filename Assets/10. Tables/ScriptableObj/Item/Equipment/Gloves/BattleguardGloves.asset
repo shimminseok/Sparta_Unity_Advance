@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f75b24253efe8f245b0cd62af0aaeff9, type: 3}
+  m_Name: BattleguardGloves
+  m_EditorClassIdentifier: 
+  ID: 30102
+  ItemName: "\uC804\uC704\uBCD1\uC758 \uD314\uBCF4\uD638\uAD6C"
+  ItemDescription: "\uADFC\uC811\uC804\uC5D0\uC11C \uD314\uC744 \uBCF4\uD638\uD558\uAE30
+    \uC704\uD55C \uD2BC\uD2BC\uD55C \uAC15\uCCA0 \uC7A5\uBE44"
+  ItemType: 1
+  ItemSprite: {fileID: 21300000, guid: a889cb8ba677b3e418c33307c1336099, type: 3}
+  IsStackable: 0
+  Stats:
+  - StatType: 7
+    ModifierType: 1
+    Value: 0.1
+  ItemGrade: 0
+  MaxStack: 0

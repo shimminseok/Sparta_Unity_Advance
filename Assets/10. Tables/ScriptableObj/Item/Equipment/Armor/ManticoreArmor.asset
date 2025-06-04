@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f75b24253efe8f245b0cd62af0aaeff9, type: 3}
+  m_Name: ManticoreArmor
+  m_EditorClassIdentifier: 
+  ID: 10105
+  ItemName: "\uB9E8\uD2F0\uCF54\uC5B4\uC758 \uAC00\uC8FD\uAC11\uC637"
+  ItemDescription: "\uC804\uC124\uC758 \uB9F9\uC218\uC758 \uAC00\uC8FD\uC73C\uB85C
+    \uC81C\uC791\uB41C \uACF5\uACA9\uC801\uC778 \uAC11\uC637"
+  ItemType: 1
+  ItemSprite: {fileID: 21300000, guid: d359cffafe45e0e4c82527e85234799b, type: 3}
+  IsStackable: 0
+  Stats:
+  - StatType: 0
+    ModifierType: 0
+    Value: 600
+  - StatType: 5
+    ModifierType: 0
+    Value: 30
+  ItemGrade: 0
+  MaxStack: 0

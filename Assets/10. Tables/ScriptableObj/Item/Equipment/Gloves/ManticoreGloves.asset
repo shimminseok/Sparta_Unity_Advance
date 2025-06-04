@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f75b24253efe8f245b0cd62af0aaeff9, type: 3}
+  m_Name: ManticoreGloves
+  m_EditorClassIdentifier: 
+  ID: 30105
+  ItemName: "\uB9E8\uD2F0\uCF54\uC5B4\uC758 \uBC1C\uD1B1"
+  ItemDescription: "\uB9F9\uC218\uC758 \uD798\uC774 \uAE43\uB4E0 \uC190\uB4F1 \uC7A5\uAC11."
+  ItemType: 1
+  ItemSprite: {fileID: 21300000, guid: f60a784b4c692634c923c83dc6d7addb, type: 3}
+  IsStackable: 0
+  Stats:
+  - StatType: 7
+    ModifierType: 1
+    Value: 0.3
+  ItemGrade: 0
+  MaxStack: 0

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f75b24253efe8f245b0cd62af0aaeff9, type: 3}
+  m_Name: BattleguardBoots
+  m_EditorClassIdentifier: 
+  ID: 20102
+  ItemName: "\uC804\uC704\uBCD1\uC758 \uC804\uD22C\uD654"
+  ItemDescription: "\uC9C4\uD759\uACFC \uD53C\uAC00 \uD280\uB294 \uC804\uC7A5 \uC18D\uC5D0\uC11C\uB3C4
+    \uD754\uB4E4\uB9BC \uC5C6\uB294 \uBC1C\uAC78\uC74C\uC744 \uC704\uD55C \uC911\uB7C9
+    \uBD80\uCE20"
+  ItemType: 1
+  ItemSprite: {fileID: 21300000, guid: 12bba31e10a26b645908ca35cce3ac2a, type: 3}
+  IsStackable: 0
+  Stats:
+  - StatType: 0
+    ModifierType: 0
+    Value: 120
+  ItemGrade: 0
+  MaxStack: 0

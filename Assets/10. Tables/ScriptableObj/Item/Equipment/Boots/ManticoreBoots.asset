@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f75b24253efe8f245b0cd62af0aaeff9, type: 3}
+  m_Name: ManticoreBoots
+  m_EditorClassIdentifier: 
+  ID: 20105
+  ItemName: "\uB9E8\uD2F0\uCF54\uC5B4\uC758 \uBC1C\uD1B1 \uC7A5\uD654"
+  ItemDescription: "\uC801\uC744 \uCC22\uACE0 \uC9C0\uB098\uAC00\uB294 \uC57C\uC218\uC758
+    \uBC1C\uC790\uAD6D\uCC98\uB7FC, \uACF5\uACA9\uC801\uC778 \uC774\uB3D9\uC744 \uC720\uB3C4\uD558\uB294
+    \uC2E0\uBC1C"
+  ItemType: 1
+  ItemSprite: {fileID: 21300000, guid: 6f6648c32a819be4a87ef3bad2807bad, type: 3}
+  IsStackable: 0
+  Stats:
+  - StatType: 0
+    ModifierType: 0
+    Value: 150
+  ItemGrade: 0
+  MaxStack: 0
