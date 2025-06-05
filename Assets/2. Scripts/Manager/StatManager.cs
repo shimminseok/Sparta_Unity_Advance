@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _10._Tables.ScriptableObj;
 using UnityEngine;
 
 
 public class StatManager : MonoBehaviour
 {
-    public readonly Dictionary<StatType, StatBase> playerStat = new Dictionary<StatType, StatBase>();
+    public Dictionary<StatType, StatBase> PlayerStat { get; private set; } = new Dictionary<StatType, StatBase>();
 
 
     private void Awake()
@@ -16,9 +17,13 @@ public class StatManager : MonoBehaviour
 
     private void Initialize()
     {
-        for (int i = 0; i < Enum.GetValues(typeof(StatType)).Length; i++)
+        var playerData = TableManager.Instance.GetTable<PlayerTable>();
+        foreach (PlayerSO playerSo in playerData.dataDic.Values)
         {
-            playerStat[(StatType)i] = BaseStatFactory((StatType)i, 0);
+            foreach (var stat in playerSo.PlayerStats)
+            {
+                PlayerStat[stat.StatType] = BaseStatFactory(stat.StatType, stat.Value);
+            }
         }
     }
 
@@ -26,32 +31,25 @@ public class StatManager : MonoBehaviour
     {
         return type switch
         {
-            StatType.MaxHp          => new CalculatedStat(type, value),
-            StatType.AttackPow      => new CalculatedStat(type, value),
-            StatType.AttackSpd      => new CalculatedStat(type, value),
-            StatType.MoveSpeed      => new CalculatedStat(type, 5),
-            StatType.Defense        => new CalculatedStat(type, value),
-            StatType.Dodge          => new CalculatedStat(type, value),
-            StatType.CriticalChance => new CalculatedStat(type, value),
-///////////////////////////////////////////////////////////////////////////////////
             StatType.CurHp => new ResourceStat(type, value),
-            _              => null
+            ///////////////////////////////////////////////////////////////////////////////////
+            _ => new CalculatedStat(type, value),
         };
     }
 
     public T GetStat<T>(StatType type) where T : StatBase
     {
-        return playerStat[type] as T;
+        return PlayerStat[type] as T;
     }
 
     public float GetValue(StatType type)
     {
-        return playerStat[type].GetCurrent();
+        return PlayerStat[type].GetCurrent();
     }
 
     public void Recover(StatType statType, float value)
     {
-        if (playerStat[statType] is ResourceStat res)
+        if (PlayerStat[statType] is ResourceStat res)
         {
             if (res.CurrentValue < res.MaxValue)
                 res.Recover(value);
@@ -60,7 +58,7 @@ public class StatManager : MonoBehaviour
 
     public void Consume(StatType statType, float value)
     {
-        if (playerStat[statType] is ResourceStat res)
+        if (PlayerStat[statType] is ResourceStat res)
         {
             if (res.CurrentValue > 0)
                 res.Consume(value);
@@ -69,7 +67,7 @@ public class StatManager : MonoBehaviour
 
     public void ApplyStatEffect(StatType type, StatModifierType valueType, float value)
     {
-        if (playerStat[type] is not CalculatedStat stat) return;
+        if (PlayerStat[type] is not CalculatedStat stat) return;
 
         switch (valueType)
         {
@@ -89,7 +87,7 @@ public class StatManager : MonoBehaviour
 
     private void SyncCurrentWithMax(StatType curStatType, CalculatedStat stat)
     {
-        if (playerStat.TryGetValue(curStatType, out var res) && res is ResourceStat curStat)
+        if (PlayerStat.TryGetValue(curStatType, out var res) && res is ResourceStat curStat)
         {
             curStat.SetMax(stat.FinalValue);
         }

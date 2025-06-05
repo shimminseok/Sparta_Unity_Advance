@@ -6,8 +6,9 @@ using UnityEngine.UI;
 
 public class UIHeader : MonoBehaviour, IPointerDownHandler, IDragHandler
 {
-    [SerializeField] Transform targetTrans;
+    [SerializeField] private Transform targetTrans;
 
+    [SerializeField] private Button closeButton;
     private Vector2 beginPoint;
     private Vector2 moveBegin;
 
@@ -17,6 +18,12 @@ public class UIHeader : MonoBehaviour, IPointerDownHandler, IDragHandler
     private void Awake()
     {
         targetTrans = transform.parent;
+    }
+
+    private void Start()
+    {
+        IUIBase uiBase = transform.root.GetComponent<IUIBase>();
+        closeButton.onClick.AddListener(uiBase.Close);
     }
 
     public void OnDrag(PointerEventData eventData)

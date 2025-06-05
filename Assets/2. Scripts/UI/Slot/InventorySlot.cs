@@ -7,7 +7,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IBeginDragHandler, IDr
 {
     [SerializeField] private Image icon;
     [SerializeField] private TextMeshProUGUI itemQuantity;
-
+    [SerializeField] private TextMeshProUGUI equipMark;
     public InventoryItem InventoryItem { get; private set; }
     private bool isSelected;
 

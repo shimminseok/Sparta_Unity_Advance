@@ -5,7 +5,8 @@ using UnityEngine;
 
 public abstract class StatBase
 {
-    public StatType Type { get; protected set; }
+    public          StatType Type  { get; protected set; }
+    public abstract float    Value { get; }
     public Action<float> OnValueChanged;
 
     public StatBase(StatType type)
@@ -24,6 +25,8 @@ public class CalculatedStat : StatBase
     public float EquipValue  { get; private set; }
 
     public float FinalValue => Mathf.Max((BaseValue + BuffFlat + EquipValue) * (1 + BuffPercent), 0);
+
+    public override float Value => FinalValue;
 
     public CalculatedStat(StatType type, float baseValue) : base(type)
     {
@@ -61,6 +64,8 @@ public class ResourceStat : StatBase
 {
     public float CurrentValue { get; private set; }
     public float MaxValue     { get; private set; }
+
+    public override float Value => CurrentValue;
 
 
     public ResourceStat(StatType type, float maxValue) : base(type)

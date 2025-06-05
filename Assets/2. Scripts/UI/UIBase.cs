@@ -8,7 +8,6 @@ public class UIBase<T> : SceneOnlySingleton<T> where T : UIBase<T>, IUIBase
     public virtual void Open()
     {
         content.SetActive(true);
-        UIManager.Instance.AllClosePanel();
         UIManager.Instance.OpenPanel(this as IUIBase);
     }
 
