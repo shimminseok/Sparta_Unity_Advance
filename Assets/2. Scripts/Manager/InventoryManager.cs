@@ -44,21 +44,17 @@ public class InventoryManager : SceneOnlySingleton<InventoryManager>
         OnInventorySlotUpdate?.Invoke(index);
     }
 
-    public void AddItem(ItemSO item, int amount = 1)
+    public void AddItem(InventoryItem item, int amount = 1)
     {
-        if (item is ConsumableItemSO consumableItemSo)
+        if (item.ItemSo is ConsumableItemSO consumableItemSo)
         {
             if (consumableItemSo.IsStackable)
-                AddStackableItem(consumableItemSo, amount);
+                AddStackableItem(item, amount);
             else
-            {
-                AddNonStackableItem(consumableItemSo, amount);
-            }
+                AddNonStackableItem(item, amount);
         }
-        else if (item is EquipmentItemSO equipmentItemSo)
-        {
-            AddNonStackableItem(equipmentItemSo, amount);
-        }
+        else if (item.ItemSo is EquipmentItemSO equipmentItemSo)
+            AddNonStackableItem(item, amount);
     }
 
     /// <summary>
@@ -66,9 +62,9 @@ public class InventoryManager : SceneOnlySingleton<InventoryManager>
     /// </summary>
     /// <param name="itemSo"></param>
     /// <param name="amount"></param>
-    private void AddStackableItem(ItemSO itemSo, int amount = 1)
+    private void AddStackableItem(InventoryItem item, int amount = 1)
     {
-        InventoryItem findItem = Inventory.Find(x => x != null && x.ItemSo == itemSo);
+        InventoryItem findItem = Inventory.Find(x => x != null && x.ItemSo == item.ItemSo);
         int           index    = 0;
         if (findItem == null)
         {
@@ -81,7 +77,7 @@ public class InventoryManager : SceneOnlySingleton<InventoryManager>
             }
             else
             {
-                findItem = new InventoryItem(itemSo, amount);
+                findItem = new InventoryItem(item.ItemSo, amount);
             }
 
             Inventory[index] = findItem;
@@ -100,7 +96,7 @@ public class InventoryManager : SceneOnlySingleton<InventoryManager>
     /// </summary>
     /// <param name="itemSo"></param>
     /// <param name="amount"></param>
-    private void AddNonStackableItem(ItemSO itemSo, int amount = 1)
+    private void AddNonStackableItem(InventoryItem item, int amount = 1)
     {
         int emptySlotCount = Inventory.Count(x => x == null);
 
@@ -115,15 +111,17 @@ public class InventoryManager : SceneOnlySingleton<InventoryManager>
             int index = Inventory.IndexOf(null);
             if (index >= 0)
             {
-                InventoryItem data = new InventoryItem(itemSo, 1);
-                Inventory[index] = data;
+                Inventory[index] = item;
                 OnInventorySlotUpdate?.Invoke(index);
             }
         }
     }
 
-    public void UseItem(int index, int amount = 1)
+    public void UseItem(InventoryItem item, int amount = 1)
     {
+        int index = Inventory.IndexOf(item);
+        if (index <= 0)
+            return;
         InventoryItem inventoryItem = Inventory[index];
 
         if (inventoryItem == null || inventoryItem.Quantity < amount || inventoryItem.ItemSo == null)

@@ -25,11 +25,15 @@ public class EquipmentManager : MonoBehaviour
     public void EquipItem(EquipmentItem data)
     {
         EquipmentType type = data.ItemSo.EquipmentType;
-        if (data.IsEquipped || EquipmentItems.ContainsKey(type))
+        if (data.IsEquipped)
         {
             UnEquipItem(type);
-            if (data.IsEquipped)
-                return;
+            return;
+        }
+
+        if (EquipmentItems.ContainsKey(type))
+        {
+            UnEquipItem(type);
         }
 
         EquipmentItems[type] = data;

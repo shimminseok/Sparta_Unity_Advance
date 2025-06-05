@@ -20,9 +20,14 @@ public class Cheat : MonoBehaviour
                 if (data is ConsumableItemSO consumable)
                 {
                     amount = consumable.MaxStack;
+                    InventoryItem item = new InventoryItem(data, amount);
+                    InventoryManager.Instance.AddItem(item, amount);
                 }
-
-                InventoryManager.Instance.AddItem(data, amount);
+                else if (data is EquipmentItemSO equipment)
+                {
+                    EquipmentItem equipmentItem = new EquipmentItem(equipment, null);
+                    InventoryManager.Instance.AddItem(equipmentItem, amount);
+                }
             }
         }
 

@@ -27,6 +27,17 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IBeginDragHandler, IDr
         InventoryItem = item;
         icon.sprite = item.ItemSo.ItemSprite;
         itemQuantity.text = item.Quantity > 1 ? $"x{item.Quantity}" : string.Empty;
+        if (item.ItemSo is EquipmentItemSO equipmentItemSo)
+        {
+            if (PlayerController.Instance.EquipmentManager.EquipmentItems.TryGetValue(equipmentItemSo.EquipmentType, out var equipitem))
+            {
+                SetEquipMark(equipitem != null && item == equipitem);
+            }
+        }
+        else
+        {
+            SetEquipMark(false);
+        }
     }
 
     public void EmptySlot()
@@ -34,6 +45,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IBeginDragHandler, IDr
         icon.enabled = false;
         InventoryItem = null;
         itemQuantity.text = "";
+        SetEquipMark(false);
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -69,11 +81,17 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IBeginDragHandler, IDr
     {
         ItemSO itemSo = InventoryItem.ItemSo;
         if (itemSo is ConsumableItemSO)
-            InventoryManager.Instance.UseItem(Index, 1);
+        {
+            InventoryManager.Instance.UseItem(InventoryItem, 1);
+        }
         else if (itemSo is EquipmentItemSO equipmentItemSo)
         {
-            EquipmentItem equipItem = new EquipmentItem(equipmentItemSo, this);
-            PlayerController.Instance.EquipmentManager.EquipItem(equipItem);
+            var equipmentManager = PlayerController.Instance.EquipmentManager;
+            if (InventoryItem is EquipmentItem equipmentItem)
+            {
+                equipmentItem.LinkedSlot = this;
+                equipmentManager.EquipItem(equipmentItem);
+            }
         }
     }
 
