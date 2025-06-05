@@ -20,18 +20,17 @@ public class UICharInfo : UIBase<UICharInfo>, IUIBase
     private void Start()
     {
         InstantiateSlot();
+        PlayerController.Instance.EquipmentManager.OnEquipmentChanged += UpdateEquipmentSlot;
     }
 
     public override void Open()
     {
         base.Open();
-        PlayerController.Instance.EquipmentManager.OnEquipmentChanged += UpdateEquipmentSlot;
     }
 
     public override void Close()
     {
         base.Close();
-        PlayerController.Instance.EquipmentManager.OnEquipmentChanged -= UpdateEquipmentSlot;
     }
 
     private void InstantiateSlot()
@@ -45,13 +44,20 @@ public class UICharInfo : UIBase<UICharInfo>, IUIBase
 
             GameObject obj      = Instantiate(slotPrefab, slotRoot);
             StatSlot   statSlot = obj.GetComponent<StatSlot>();
-            statSlot.UpdateSlot(stat.Value);
+            statSlot.SetSlot(stat.Value);
+            stat.Value.OnValueChanged += statSlot.UpdateSlot;
         }
     }
 
     private void UpdateEquipmentSlot(EquipmentType equipmentType)
     {
         equipmentSlots[(int)equipmentType].EquipmentItem();
+    }
+
+    protected void OnDisable()
+    {
+        if (PlayerController.Instance && PlayerController.Instance.EquipmentManager)
+            PlayerController.Instance.EquipmentManager.OnEquipmentChanged -= UpdateEquipmentSlot;
     }
 
     protected override void OnDestroy()
