@@ -30,5 +30,14 @@ public class Cheat : MonoBehaviour
         {
             PlayerController.Instance.TakeDamage(10);
         }
+
+        else if (Input.GetKeyDown(KeyCode.I))
+        {
+            UIManager.Instance.CheckOpenPopup(UIInventory.Instance);
+        }
+        else if (Input.GetKeyDown(KeyCode.P))
+        {
+            UIManager.Instance.CheckOpenPopup(UICharInfo.Instance);
+        }
     }
 }

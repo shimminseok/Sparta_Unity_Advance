@@ -10,6 +10,7 @@ public class UICharInfo : UIBase<UICharInfo>, IUIBase
 {
     [SerializeField] private GameObject slotPrefab;
     [SerializeField] private Transform slotRoot;
+    [SerializeField] private EquipmentItemSlot[] equipmentSlots;
 
     protected override void Awake()
     {
@@ -21,18 +22,16 @@ public class UICharInfo : UIBase<UICharInfo>, IUIBase
         InstantiateSlot();
     }
 
-    private void Update()
-    {
-    }
-
     public override void Open()
     {
         base.Open();
+        PlayerController.Instance.EquipmentManager.OnEquipmentChanged += UpdateEquipmentSlot;
     }
 
     public override void Close()
     {
         base.Close();
+        PlayerController.Instance.EquipmentManager.OnEquipmentChanged -= UpdateEquipmentSlot;
     }
 
     private void InstantiateSlot()
@@ -48,6 +47,11 @@ public class UICharInfo : UIBase<UICharInfo>, IUIBase
             StatSlot   statSlot = obj.GetComponent<StatSlot>();
             statSlot.UpdateSlot(stat.Value);
         }
+    }
+
+    private void UpdateEquipmentSlot(EquipmentType equipmentType)
+    {
+        equipmentSlots[(int)equipmentType].EquipmentItem();
     }
 
     protected override void OnDestroy()

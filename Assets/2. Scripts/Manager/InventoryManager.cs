@@ -175,6 +175,11 @@ public class InventoryManager : SceneOnlySingleton<InventoryManager>
         return Inventory[index];
     }
 
+    public InventoryItem GetInventoryItemAtItemSo(InventoryItem item)
+    {
+        return Inventory.Find(x => x != null && x == item);
+    }
+
 
     protected override void OnDestroy()
     {

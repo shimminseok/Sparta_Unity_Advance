@@ -72,10 +72,14 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IBeginDragHandler, IDr
             InventoryManager.Instance.UseItem(Index, 1);
         else if (itemSo is EquipmentItemSO equipmentItemSo)
         {
-            EquipmentItem equipItem = new EquipmentItem(equipmentItemSo);
+            EquipmentItem equipItem = new EquipmentItem(equipmentItemSo, this);
             PlayerController.Instance.EquipmentManager.EquipItem(equipItem);
-            equipMark.text = equipItem.IsEquipped ? "E" : string.Empty;
         }
+    }
+
+    public void SetEquipMark(bool isActive)
+    {
+        equipMark.gameObject.SetActive(isActive);
     }
 
     private void SwitchInvenSlot(InventorySlot swich)
