@@ -79,20 +79,15 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IBeginDragHandler, IDr
 
     private void UseOrEquipItem()
     {
-        ItemSO itemSo = InventoryItem.ItemSo;
-        if (itemSo is ConsumableItemSO)
-        {
-            InventoryManager.Instance.UseItem(InventoryItem, 1);
-        }
-        else if (itemSo is EquipmentItemSO equipmentItemSo)
+        if (InventoryItem is EquipmentItem equipmentItem)
         {
             var equipmentManager = PlayerController.Instance.EquipmentManager;
-            if (InventoryItem is EquipmentItem equipmentItem)
-            {
-                equipmentItem.LinkedSlot = this;
-                equipmentManager.EquipItem(equipmentItem);
-            }
+            equipmentItem.LinkedSlot = this;
+            equipmentManager.EquipItem(equipmentItem);
+            return;
         }
+
+        InventoryManager.Instance.UseItem(InventoryItem, 1);
     }
 
     public void SetEquipMark(bool isActive)

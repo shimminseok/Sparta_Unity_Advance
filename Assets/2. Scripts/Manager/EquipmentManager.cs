@@ -9,11 +9,13 @@ public class EquipmentItem : InventoryItem
     public InventorySlot LinkedSlot;
     public new EquipmentItemSO ItemSo => base.ItemSo as EquipmentItemSO;
 
-    public EquipmentItem(EquipmentItemSO itemSo, InventorySlot linkedSlot) : base(itemSo, 1)
+    public EquipmentItem(EquipmentItemSO itemSo, InventorySlot linkedSlot = null) : base(itemSo, 1)
     {
         IsEquipped = false;
         LinkedSlot = linkedSlot;
     }
+
+    public override InventoryItem Clone() => new EquipmentItem(ItemSo);
 }
 
 public class EquipmentManager : MonoBehaviour
@@ -50,20 +52,19 @@ public class EquipmentManager : MonoBehaviour
 
     public void UnEquipItem(EquipmentType type)
     {
-        if (EquipmentItems.ContainsKey(type) && EquipmentItems[type] != null)
-        {
-            EquipmentItem item = EquipmentItems[type];
-            // InventoryManager.Instance.AddItem(item.ItemSo);
-            foreach (StatData stat in item.ItemSo.Stats)
-            {
-                PlayerController.Instance.StatManager.ApplyStatEffect(stat.StatType, StatModifierType.Equipment, -stat.Value);
-            }
+        if (!EquipmentItems.TryGetValue(type, out var item) || item == null)
+            return;
 
-            item.IsEquipped = false;
-            item.LinkedSlot.SetEquipMark(false);
-            EquipmentItems[type] = null;
-            Debug.Log($"아이템 장착 해제 : {item.ItemSo.ItemName}");
-            OnEquipmentChanged?.Invoke(type);
+        // InventoryManager.Instance.AddItem(item.ItemSo);
+        foreach (StatData stat in item.ItemSo.Stats)
+        {
+            PlayerController.Instance.StatManager.ApplyStatEffect(stat.StatType, StatModifierType.Equipment, -stat.Value);
         }
+
+        item.IsEquipped = false;
+        item.LinkedSlot.SetEquipMark(false);
+        EquipmentItems[type] = null;
+        Debug.Log($"아이템 장착 해제 : {item.ItemSo.ItemName}");
+        OnEquipmentChanged?.Invoke(type);
     }
 }

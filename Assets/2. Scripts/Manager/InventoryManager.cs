@@ -8,14 +8,14 @@ public class InventoryItem
 {
     public ItemSO ItemSo;
     public int Quantity;
-    public IItemEffect itemEffect;
 
     public InventoryItem(ItemSO itemSo, int quantity)
     {
         ItemSo = itemSo;
         Quantity = quantity;
-        itemEffect = ItemEffectFactory.CreateItemEffect(itemSo);
     }
+
+    public virtual InventoryItem Clone() => new InventoryItem(ItemSo, Quantity);
 }
 
 public class InventoryManager : SceneOnlySingleton<InventoryManager>
@@ -46,14 +46,11 @@ public class InventoryManager : SceneOnlySingleton<InventoryManager>
 
     public void AddItem(InventoryItem item, int amount = 1)
     {
-        if (item.ItemSo is ConsumableItemSO consumableItemSo)
+        if (item.ItemSo is ConsumableItemSO consumableItemSo && consumableItemSo.IsStackable)
         {
-            if (consumableItemSo.IsStackable)
-                AddStackableItem(item, amount);
-            else
-                AddNonStackableItem(item, amount);
+            AddStackableItem(item, amount);
         }
-        else if (item.ItemSo is EquipmentItemSO equipmentItemSo)
+        else
             AddNonStackableItem(item, amount);
     }
 
@@ -64,7 +61,7 @@ public class InventoryManager : SceneOnlySingleton<InventoryManager>
     /// <param name="amount"></param>
     private void AddStackableItem(InventoryItem item, int amount = 1)
     {
-        InventoryItem findItem = Inventory.Find(x => x != null && x.ItemSo == item.ItemSo);
+        InventoryItem findItem = Inventory.Find(x => x != null && x.ItemSo.ID == item.ItemSo.ID);
         int           index    = 0;
         if (findItem == null)
         {
@@ -98,50 +95,31 @@ public class InventoryManager : SceneOnlySingleton<InventoryManager>
     /// <param name="amount"></param>
     private void AddNonStackableItem(InventoryItem item, int amount = 1)
     {
-        int emptySlotCount = Inventory.Count(x => x == null);
-
-        if (emptySlotCount < amount)
-        {
-            Debug.Log("인벤토리 공간이 부족합니다.");
-            return;
-        }
-
         for (int i = 0; i < amount; i++)
         {
             int index = Inventory.IndexOf(null);
-            if (index >= 0)
-            {
-                Inventory[index] = item;
-                OnInventorySlotUpdate?.Invoke(index);
-            }
+            if (index < 0)
+                return;
+            Inventory[index] = item.Clone();
+            OnInventorySlotUpdate?.Invoke(index);
         }
     }
 
     public void UseItem(InventoryItem item, int amount = 1)
     {
         int index = Inventory.IndexOf(item);
-        if (index <= 0)
-            return;
-        InventoryItem inventoryItem = Inventory[index];
 
-        if (inventoryItem == null || inventoryItem.Quantity < amount || inventoryItem.ItemSo == null)
-        {
-            return;
-        }
-
-        if (inventoryItem.ItemSo is not ConsumableItemSO consumableItemSo)
+        if (index < 0 || item.Quantity < amount) return;
+        if (item.ItemSo is not ConsumableItemSO consumableItemSo)
             return;
         foreach (StatusEffectData itemSoStatusEffect in consumableItemSo.StatusEffects)
         {
             PlayerController.Instance.StatusEffectManager.ApplyEffect(BuffFactory.CreateBuff(itemSoStatusEffect));
         }
 
-        if (inventoryItem.ItemSo.ItemType == ItemType.Consume)
-        {
-            inventoryItem.Quantity -= amount;
-            if (inventoryItem.Quantity <= 0)
-                RemoveItem(index);
-        }
+        item.Quantity -= amount;
+        if (item.Quantity <= 0)
+            RemoveItem(index);
 
 
         OnInventorySlotUpdate?.Invoke(index);
@@ -173,7 +151,7 @@ public class InventoryManager : SceneOnlySingleton<InventoryManager>
         return Inventory[index];
     }
 
-    public InventoryItem GetInventoryItemAtItemSo(InventoryItem item)
+    public InventoryItem FindByItemInstance(InventoryItem item)
     {
         return Inventory.Find(x => x != null && x == item);
     }

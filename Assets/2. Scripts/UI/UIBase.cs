@@ -5,6 +5,12 @@ public class UIBase<T> : SceneOnlySingleton<T> where T : UIBase<T>, IUIBase
     [Header("UIBase")]
     [SerializeField] private GameObject content;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        Close();
+    }
+
     public virtual void Open()
     {
         content.SetActive(true);
