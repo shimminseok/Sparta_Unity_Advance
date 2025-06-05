@@ -54,7 +54,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IBeginDragHandler, IDr
         }
     }
 
-    public void SelectedSlot()
+    private void SelectedSlot()
     {
         UIInventory.Instance.SelecteItem(this);
         isSelected = true;
@@ -65,10 +65,17 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IBeginDragHandler, IDr
         isSelected = false;
     }
 
-    public void UseOrEquipItem()
+    private void UseOrEquipItem()
     {
         ItemSO itemSo = InventoryItem.ItemSo;
-        InventoryManager.Instance.UseItem(Index, 1);
+        if (itemSo is ConsumableItemSO)
+            InventoryManager.Instance.UseItem(Index, 1);
+        else if (itemSo is EquipmentItemSO equipmentItemSo)
+        {
+            EquipmentItem equipItem = new EquipmentItem(equipmentItemSo);
+            PlayerController.Instance.EquipmentManager.EquipItem(equipItem);
+            equipMark.text = equipItem.IsEquipped ? "E" : string.Empty;
+        }
     }
 
     private void SwitchInvenSlot(InventorySlot swich)

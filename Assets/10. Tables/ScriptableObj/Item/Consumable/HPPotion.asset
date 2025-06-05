@@ -18,9 +18,8 @@ MonoBehaviour:
   ItemType: 0
   ItemSprite: {fileID: 21300000, guid: 40591bfc896615d46b132f70304353ed, type: 3}
   ItemGrade: 1
-  Stats: []
   StatusEffects:
-  - EffectType: 0
+  - EffectType: 6
     Stat:
       StatType: 1
       ModifierType: 0

@@ -16,8 +16,19 @@ public class Cheat : MonoBehaviour
         {
             foreach (var data in TableManager.Instance.GetTable<ItemTable>().dataDic.Values)
             {
-                InventoryManager.Instance.AddItem(data);
+                int amount = 1;
+                if (data is ConsumableItemSO consumable)
+                {
+                    amount = consumable.MaxStack;
+                }
+
+                InventoryManager.Instance.AddItem(data, amount);
             }
+        }
+
+        else if (Input.GetKeyDown(KeyCode.F2))
+        {
+            PlayerController.Instance.TakeDamage(10);
         }
     }
 }

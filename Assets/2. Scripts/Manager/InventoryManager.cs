@@ -131,14 +131,12 @@ public class InventoryManager : SceneOnlySingleton<InventoryManager>
             return;
         }
 
-        // foreach (StatusEffectData itemSoStatusEffect in consumeItem.StatusEffects)
-        // {
-        //     PlayerController.Instance.StatusEffectManager.ApplyEffect(BuffFactory.CreateBuff(itemSoStatusEffect));
-        // }
-        bool canUse = true;
-        inventoryItem.itemEffect?.Use(out canUse);
-        if (!canUse)
+        if (inventoryItem.ItemSo is not ConsumableItemSO consumableItemSo)
             return;
+        foreach (StatusEffectData itemSoStatusEffect in consumableItemSo.StatusEffects)
+        {
+            PlayerController.Instance.StatusEffectManager.ApplyEffect(BuffFactory.CreateBuff(itemSoStatusEffect));
+        }
 
         if (inventoryItem.ItemSo.ItemType == ItemType.Consume)
         {

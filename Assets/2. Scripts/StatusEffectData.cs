@@ -11,6 +11,7 @@ public enum StatusEffectType
     TimedModifierBuff,
     PeriodicDamageDebuff,
     Recover,
+    RecoverOverTime,
 }
 
 

@@ -52,7 +52,10 @@ public class StatManager : MonoBehaviour
         if (PlayerStat[statType] is ResourceStat res)
         {
             if (res.CurrentValue < res.MaxValue)
+            {
                 res.Recover(value);
+                print($"Recover : {statType} : {value} RemainValue: {res.CurrentValue}");
+            }
         }
     }
 
@@ -61,7 +64,10 @@ public class StatManager : MonoBehaviour
         if (PlayerStat[statType] is ResourceStat res)
         {
             if (res.CurrentValue > 0)
+            {
                 res.Consume(value);
+                print($"Consume {statType} : {value}, RemainValue: {res.CurrentValue}");
+            }
         }
     }
 
