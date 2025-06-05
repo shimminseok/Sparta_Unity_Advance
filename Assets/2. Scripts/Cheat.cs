@@ -1,18 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Cheat : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            UIManager.Instance.CheckOpenPopup(UIInventory.Instance);
+        }
+        else if (Input.GetKeyDown(KeyCode.P))
+        {
+            UIManager.Instance.CheckOpenPopup(UICharInfo.Instance);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+
+    private void OnGUI()
     {
-        if (Input.GetKeyDown(KeyCode.F1))
+#if UNITY_EDITOR
+        if (GUI.Button(new Rect(50f, 50f, 250f, 150f), "골드 증가"))
+        {
+            AccountManager.Instance.AddGold(100000);
+        }
+
+        if (GUI.Button(new Rect(50f, 200f, 250f, 150f), "아이템 획득"))
         {
             foreach (var data in TableManager.Instance.GetTable<ItemTable>().dataDic.Values)
             {
@@ -31,18 +45,10 @@ public class Cheat : MonoBehaviour
             }
         }
 
-        else if (Input.GetKeyDown(KeyCode.F2))
+        if (GUI.Button(new Rect(50f, 350f, 250f, 150f), "대미지"))
         {
             PlayerController.Instance.TakeDamage(10);
         }
-
-        else if (Input.GetKeyDown(KeyCode.I))
-        {
-            UIManager.Instance.CheckOpenPopup(UIInventory.Instance);
-        }
-        else if (Input.GetKeyDown(KeyCode.P))
-        {
-            UIManager.Instance.CheckOpenPopup(UICharInfo.Instance);
-        }
+#endif
     }
 }

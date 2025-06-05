@@ -25,7 +25,7 @@ public class StatSlot : MonoBehaviour
         }
         else
         {
-            slotValue.text = stat.Value.ToString("N0");
+            slotValue.text = stat.Value.ToString("N1");
         }
     }
 }

@@ -54,7 +54,7 @@ public class StatManager : MonoBehaviour
             if (res.CurrentValue < res.MaxValue)
             {
                 res.Recover(value);
-                print($"Recover : {statType} : {value} RemainValue: {res.CurrentValue}");
+                Debug.Log($"Recover : {statType} : {value} RemainValue: {res.CurrentValue}");
             }
         }
     }
@@ -66,7 +66,7 @@ public class StatManager : MonoBehaviour
             if (res.CurrentValue > 0)
             {
                 res.Consume(value);
-                print($"Consume {statType} : {value}, RemainValue: {res.CurrentValue}");
+                Debug.Log($"Consume {statType} : {value}, RemainValue: {res.CurrentValue}");
             }
         }
     }
@@ -89,6 +89,8 @@ public class StatManager : MonoBehaviour
                 SyncCurrentWithMax(StatType.CurHp, stat);
                 break;
         }
+
+        Debug.Log($"Stat : {type} Modify Value {value}, FinalValue : {stat.Value}");
     }
 
     private void SyncCurrentWithMax(StatType curStatType, CalculatedStat stat)

@@ -103,7 +103,7 @@ public class RecoverOverTime : StatusEffect
         float elapsed = 0f;
         while (elapsed < Duration)
         {
-            manager.ModifyBuffStat(StatType, ModifierType, Value);
+            manager.RecoverEffect(StatType, Value);
             yield return new WaitForSeconds(TickInterval);
             elapsed += TickInterval;
         }

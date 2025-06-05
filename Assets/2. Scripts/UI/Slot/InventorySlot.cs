@@ -27,11 +27,12 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IBeginDragHandler, IDr
         InventoryItem = item;
         icon.sprite = item.ItemSo.ItemSprite;
         itemQuantity.text = item.Quantity > 1 ? $"x{item.Quantity}" : string.Empty;
+
         if (item.ItemSo is EquipmentItemSO equipmentItemSo)
         {
             if (PlayerController.Instance.EquipmentManager.EquipmentItems.TryGetValue(equipmentItemSo.EquipmentType, out var equipitem))
             {
-                SetEquipMark(equipitem != null && item == equipitem);
+                SetEquipMark(equipitem != null && equipitem == InventoryItem);
             }
         }
         else
