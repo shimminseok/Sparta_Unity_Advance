@@ -8,6 +8,15 @@ public enum ItemType
     Eqiupment,
 }
 
+public enum EquipmentType
+{
+    Waepon,
+    Helmet,
+    Aromor,
+    Boots,
+    Gloves
+}
+
 public enum StatType
 {
     MaxHp,

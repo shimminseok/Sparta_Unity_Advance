@@ -9,19 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f75b24253efe8f245b0cd62af0aaeff9, type: 3}
-  m_Name: BattleguardGloves
+  m_Script: {fileID: 11500000, guid: 0708641e82eb4cd1bc8e26fd102f3526, type: 3}
+  m_Name: BattleGuardGloves
   m_EditorClassIdentifier: 
-  ID: 30102
-  ItemName: "\uC804\uC704\uBCD1\uC758 \uD314\uBCF4\uD638\uAD6C"
-  ItemDescription: "\uADFC\uC811\uC804\uC5D0\uC11C \uD314\uC744 \uBCF4\uD638\uD558\uAE30
-    \uC704\uD55C \uD2BC\uD2BC\uD55C \uAC15\uCCA0 \uC7A5\uBE44"
+  ID: 30101
+  ItemName: "\uC804\uC704\uC758 \uC190\uBAA9 \uBCF4\uD638\uB300"
+  ItemDescription: "\uC804\uC7A5\uC758 \uCD5C\uC804\uC120\uC5D0\uC11C \uCC29\uC6A9\uD558\uB294
+    \uAC15\uCCA0 \uC7A5\uAC11."
   ItemType: 1
   ItemSprite: {fileID: 21300000, guid: a889cb8ba677b3e418c33307c1336099, type: 3}
-  IsStackable: 0
+  ItemGrade: 1
+  EquipmentType: 4
   Stats:
-  - StatType: 7
-    ModifierType: 1
-    Value: 0.1
-  ItemGrade: 0
-  MaxStack: 0
+  - StatType: 0
+    ModifierType: 3
+    Value: 30

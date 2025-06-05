@@ -9,22 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f75b24253efe8f245b0cd62af0aaeff9, type: 3}
+  m_Script: {fileID: 11500000, guid: 0708641e82eb4cd1bc8e26fd102f3526, type: 3}
   m_Name: ManticoreHelmet
   m_EditorClassIdentifier: 
-  ID: 40105
+  ID: 40103
   ItemName: "\uB9E8\uD2F0\uCF54\uC5B4\uC758 \uD22C\uAD6C"
   ItemDescription: "\uC804\uC124\uC758 \uC57C\uC218 \uB9E8\uD2F0\uCF54\uC5B4\uC758
     \uD798\uC774 \uAE43\uB4E0 \uD22C\uAD6C."
   ItemType: 1
   ItemSprite: {fileID: 21300000, guid: 9d4ad9585d881b9469236aa4e598a8b1, type: 3}
-  IsStackable: 0
+  ItemGrade: 3
+  EquipmentType: 1
   Stats:
   - StatType: 0
-    ModifierType: 0
-    Value: 300
-  - StatType: 5
-    ModifierType: 0
-    Value: 17
-  ItemGrade: 0
-  MaxStack: 0
+    ModifierType: 3
+    Value: 100

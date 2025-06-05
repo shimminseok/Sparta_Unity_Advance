@@ -9,20 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f75b24253efe8f245b0cd62af0aaeff9, type: 3}
+  m_Script: {fileID: 11500000, guid: 0708641e82eb4cd1bc8e26fd102f3526, type: 3}
   m_Name: DarkMountainBoots
   m_EditorClassIdentifier: 
-  ID: 20103
+  ID: 20102
   ItemName: "\uC5B4\uB460 \uAE30\uC0AC\uC758 \uC7A5\uD654"
   ItemDescription: "\uC804\uC124\uC801\uC778 \uC5B4\uB460\uC758 \uAE30\uC0AC\uAC00
     \uCC29\uC6A9\uD55C \uC7A5\uD654.\uC804\uBC18\uC801\uC778 \uB2A5\uB825\uCE58\uAC00
     \uADE0\uD615 \uC788\uAC8C \uD5A5\uC0C1\uB41C\uB2E4."
   ItemType: 1
   ItemSprite: {fileID: 21300000, guid: 84d6a36e47e8f9042a960a8b033203a1, type: 3}
-  IsStackable: 0
+  ItemGrade: 2
+  EquipmentType: 3
   Stats:
+  - StatType: 5
+    ModifierType: 3
+    Value: 10
   - StatType: 0
-    ModifierType: 0
-    Value: 130
-  ItemGrade: 0
-  MaxStack: 0
+    ModifierType: 3
+    Value: 200

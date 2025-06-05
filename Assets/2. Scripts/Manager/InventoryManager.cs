@@ -26,7 +26,7 @@ public class InventoryManager : SceneOnlySingleton<InventoryManager>
 
     public event Action<int> OnInventorySlotUpdate;
 
-    
+
     protected override void Awake()
     {
         base.Awake();
@@ -37,6 +37,7 @@ public class InventoryManager : SceneOnlySingleton<InventoryManager>
     {
         Inventory = new List<InventoryItem>(Enumerable.Repeat<InventoryItem>(null, inventorySize));
     }
+
     private void RemoveItem(int index)
     {
         Inventory[index] = null;
@@ -45,10 +46,19 @@ public class InventoryManager : SceneOnlySingleton<InventoryManager>
 
     public void AddItem(ItemSO item, int amount = 1)
     {
-        if (item.IsStackable)
-            AddStackableItem(item, amount);
-        else
-            AddNonStackableItem(item, amount);
+        if (item is ConsumableItemSO consumableItemSo)
+        {
+            if (consumableItemSo.IsStackable)
+                AddStackableItem(consumableItemSo, amount);
+            else
+            {
+                AddNonStackableItem(consumableItemSo, amount);
+            }
+        }
+        else if (item is EquipmentItemSO equipmentItemSo)
+        {
+            AddNonStackableItem(equipmentItemSo, amount);
+        }
     }
 
     /// <summary>

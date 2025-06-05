@@ -7,6 +7,6 @@ namespace _10._Tables.ScriptableObj
     public class PlayerSO : ScriptableObject
     {
         public int ID;
-        public List<Stat> PlayerStats;
+        public List<StatData> PlayerStats;
     }
 }

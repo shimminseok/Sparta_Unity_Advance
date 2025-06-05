@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f75b24253efe8f245b0cd62af0aaeff9, type: 3}
+  m_Script: {fileID: 11500000, guid: 0708641e82eb4cd1bc8e26fd102f3526, type: 3}
   m_Name: NormalSword
   m_EditorClassIdentifier: 
   ID: 50105
@@ -19,10 +19,9 @@ MonoBehaviour:
     \uC548\uC815\uC801\uC778 \uC131\uB2A5\uC744 \uBC1C\uD718\uD55C\uB2E4."
   ItemType: 1
   ItemSprite: {fileID: 21300000, guid: c0ea4b6e528e7fe4aa6cdc94d38691a1, type: 3}
-  IsStackable: 0
+  ItemGrade: 3
+  EquipmentType: 0
   Stats:
   - StatType: 2
-    ModifierType: 0
-    Value: 100
-  ItemGrade: 0
-  MaxStack: 0
+    ModifierType: 3
+    Value: 110

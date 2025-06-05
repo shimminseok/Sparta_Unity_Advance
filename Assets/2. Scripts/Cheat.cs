@@ -14,7 +14,6 @@ public class Cheat : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            Debug.Log("Cheat");
             foreach (var data in TableManager.Instance.GetTable<ItemTable>().dataDic.Values)
             {
                 InventoryManager.Instance.AddItem(data);
