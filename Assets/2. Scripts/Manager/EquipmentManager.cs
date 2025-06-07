@@ -7,6 +7,7 @@ public class EquipmentItem : InventoryItem
 {
     public bool IsEquipped;
     public InventorySlot LinkedSlot;
+    public int EnhanceLevel;
     public new EquipmentItemSO ItemSo => base.ItemSo as EquipmentItemSO;
 
     public EquipmentItem(EquipmentItemSO itemSo, InventorySlot linkedSlot = null) : base(itemSo, 1)
@@ -23,6 +24,13 @@ public class EquipmentManager : MonoBehaviour
     public Dictionary<EquipmentType, EquipmentItem> EquipmentItems { get; private set; } = new Dictionary<EquipmentType, EquipmentItem>();
 
     public event Action<EquipmentType> OnEquipmentChanged;
+
+    GameManager gameManager;
+
+    private void Start()
+    {
+        gameManager = GameManager.Instance;
+    }
 
     public void EquipItem(EquipmentItem data)
     {
@@ -41,7 +49,7 @@ public class EquipmentManager : MonoBehaviour
         EquipmentItems[type] = data;
         foreach (StatData stat in data.ItemSo.Stats)
         {
-            PlayerController.Instance.StatManager.ApplyStatEffect(stat.StatType, StatModifierType.Equipment, stat.Value);
+            gameManager.PlayerController.StatManager.ApplyStatEffect(stat.StatType, StatModifierType.Equipment, stat.Value);
         }
 
         data.IsEquipped = true;
@@ -58,7 +66,7 @@ public class EquipmentManager : MonoBehaviour
         // InventoryManager.Instance.AddItem(item.ItemSo);
         foreach (StatData stat in item.ItemSo.Stats)
         {
-            PlayerController.Instance.StatManager.ApplyStatEffect(stat.StatType, StatModifierType.Equipment, -stat.Value);
+            gameManager.PlayerController.StatManager.ApplyStatEffect(stat.StatType, StatModifierType.Equipment, -stat.Value);
         }
 
         item.IsEquipped = false;

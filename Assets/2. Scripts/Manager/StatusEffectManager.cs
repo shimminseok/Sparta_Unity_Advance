@@ -19,7 +19,7 @@ public class StatusEffectManager : MonoBehaviour
     private List<StatusEffect> activeEffects = new List<StatusEffect>();
     private StatManager statManager;
 
-    void Start()
+    private void Start()
     {
         statManager = GetComponent<StatManager>();
     }

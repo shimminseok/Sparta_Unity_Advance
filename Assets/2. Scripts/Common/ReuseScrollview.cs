@@ -8,20 +8,20 @@ namespace UI
     [RequireComponent(typeof(RectTransform))]
     public class ReuseScrollview<T> : MonoBehaviour
     {
-        protected List<T> tableData = new List<T>(); 
-        [SerializeField] protected GameObject cellBase = null; 
-        [SerializeField] private RectOffset padding; 
-        [SerializeField] private float spacingHeight; 
-        [SerializeField] private float spacingWidth; 
-        [SerializeField] private RectOffset visibleRectPadding = null; 
+        protected List<T> tableData = new List<T>();
+        [SerializeField] protected GameObject cellBase = null;
+        [SerializeField] private RectOffset padding;
+        [SerializeField] private float spacingHeight;
+        [SerializeField] private float spacingWidth;
+        [SerializeField] private RectOffset visibleRectPadding = null;
 
         private LinkedList<ReuseCellData<T>> cells = new LinkedList<ReuseCellData<T>>();
         private Rect visibleRect;
         private Vector2 prevScrollPos;
-        public RectTransform CachedRectTransform => GetComponent<RectTransform>();
-        public ScrollRect CachedScrollRect => GetComponent<ScrollRect>();
-        public List<T> TableData => tableData;
-        public LinkedList<ReuseCellData<T>> Cells => cells;
+        public RectTransform                CachedRectTransform => GetComponent<RectTransform>();
+        public ScrollRect                   CachedScrollRect    => GetComponent<ScrollRect>();
+        public List<T>                      TableData           => tableData;
+        public LinkedList<ReuseCellData<T>> Cells               => cells;
 
         protected virtual void Start()
         {
@@ -46,7 +46,7 @@ namespace UI
             {
                 Vector2 cellStart = CachedScrollRect.vertical ? new Vector2(0f, -padding.top) : new Vector2(padding.left, 0f);
                 float   height    = GetCellHeight();
-                float   width    = GetCellWidth();
+                float   width     = GetCellWidth();
                 for (int i = 0; i < tableData.Count; i++)
                 {
                     float   cellSize = CachedScrollRect.vertical ? height : width;
@@ -65,12 +65,13 @@ namespace UI
                             cell.Left = cellStart;
                             break;
                         }
-
                     }
+
                     cellStart = CachedScrollRect.vertical
                         ? cellEnd + new Vector2(0f, spacingHeight)
                         : cellEnd + new Vector2(spacingWidth, 0f);
                 }
+
                 SetFillVisibleRectWithCells();
             }
             else
@@ -90,8 +91,10 @@ namespace UI
                     {
                         node.Value.Left = node.Previous.Value.Right + new Vector2(spacingWidth, 0f);
                     }
+
                     node = node.Next;
                 }
+
                 SetFillVisibleRectWithCells();
             }
         }
@@ -114,6 +117,7 @@ namespace UI
         {
             return cellBase.GetComponent<RectTransform>().sizeDelta.x;
         }
+
         protected void UpdateScrollViewSize()
         {
             float contentHeigth = 0f;
@@ -132,6 +136,7 @@ namespace UI
             sizeDelta.y = padding.top + contentHeigth + padding.bottom;
             CachedScrollRect.content.sizeDelta = sizeDelta;
         }
+
         protected void UpdateScrollViewSizeVertical()
         {
             float contentHeight = 0f;
@@ -170,15 +175,15 @@ namespace UI
             CachedScrollRect.content.sizeDelta = sizeDelta;
         }
 
-        ReuseCellData<T> CreateCellForIndex(int index)
+        private ReuseCellData<T> CreateCellForIndex(int index)
         {
             GameObject go = Instantiate(cellBase);
             go.SetActive(true);
-            ReuseCellData<T> cell = go.GetComponent<ReuseCellData<T>>();
-            Vector3 scale = cell.transform.localScale;
-            Vector2 sizeDelta = cell.CachedRectTransform.sizeDelta;
-            Vector2 offsetMin = cell.CachedRectTransform.offsetMin;
-            Vector2 offsetMax = cell.CachedRectTransform.offsetMax;
+            ReuseCellData<T> cell      = go.GetComponent<ReuseCellData<T>>();
+            Vector3          scale     = cell.transform.localScale;
+            Vector2          sizeDelta = cell.CachedRectTransform.sizeDelta;
+            Vector2          offsetMin = cell.CachedRectTransform.offsetMin;
+            Vector2          offsetMax = cell.CachedRectTransform.offsetMax;
 
             cell.transform.SetParent(cellBase.transform.parent);
 
@@ -195,7 +200,6 @@ namespace UI
 
         protected void UpdateCellForIndex(ReuseCellData<T> cell, int index)
         {
-
             cell.Index = index;
 
             if (cell.Index >= 0 && cell.Index <= tableData.Count - 1)
@@ -210,6 +214,7 @@ namespace UI
                 {
                     cell.Width = GetCellWidth();
                 }
+
                 cell.m_data = tableData[cell.Index];
             }
             else
@@ -217,6 +222,7 @@ namespace UI
                 cell.gameObject.SetActive(false);
             }
         }
+
         public void UpdateAllCells()
         {
             foreach (var cell in cells)
@@ -225,7 +231,8 @@ namespace UI
                     cell.UpdateContent(tableData[cell.Index]);
             }
         }
-        void UpdateVisibleRect()
+
+        private void UpdateVisibleRect()
         {
             visibleRect.x = -CachedScrollRect.content.anchoredPosition.x + visibleRectPadding.left;
             visibleRect.y = -CachedScrollRect.content.anchoredPosition.y + visibleRectPadding.top;
@@ -234,7 +241,7 @@ namespace UI
             visibleRect.height = CachedRectTransform.rect.height + visibleRectPadding.top + visibleRectPadding.bottom;
         }
 
-        bool IsWithinVisibleRect(Vector2 start, Vector2 end)
+        private bool IsWithinVisibleRect(Vector2 start, Vector2 end)
         {
             if (CachedScrollRect.vertical)
             {
@@ -246,16 +253,17 @@ namespace UI
             }
         }
 
-        void SetFillVisibleRectWithCells()
+        private void SetFillVisibleRectWithCells()
         {
             if (cells.Count < 1)
             {
                 return;
             }
 
-            ReuseCellData<T> lastCell = cells.Last.Value;
-            int nextCellDataIndex = lastCell.Index + 1;
-            Vector2 nextCellStart = CachedScrollRect.vertical ? lastCell.Bottom + new Vector2(0f, -spacingHeight)
+            ReuseCellData<T> lastCell          = cells.Last.Value;
+            int              nextCellDataIndex = lastCell.Index + 1;
+            Vector2 nextCellStart = CachedScrollRect.vertical
+                ? lastCell.Bottom + new Vector2(0f, -spacingHeight)
                 : lastCell.Right + new Vector2(spacingWidth, 0f);
 
             while (nextCellDataIndex < tableData.Count && IsWithinVisibleRect(nextCellStart, nextCellStart))
@@ -283,16 +291,17 @@ namespace UI
             UpdateVisibleRect();
             if (CachedScrollRect.vertical)
             {
-
                 UpdateVirtical((scrollPos.y < prevScrollPos.y) ? 1 : -1);
             }
             else
             {
                 UpdateHorizontal((scrollPos.x < prevScrollPos.x) ? 1 : -1);
             }
+
             prevScrollPos = scrollPos;
         }
-        void UpdateVirtical(int scrollDirection)
+
+        private void UpdateVirtical(int scrollDirection)
         {
             if (cells.Count < 1)
                 return;
@@ -309,6 +318,7 @@ namespace UI
                     cells.RemoveFirst();
                     firstCell = cells.First.Value;
                 }
+
                 SetFillVisibleRectWithCells();
             }
             else if (scrollDirection < 0)
@@ -323,11 +333,12 @@ namespace UI
                     cells.RemoveLast();
                     lastCell = cells.Last.Value;
                 }
-                SetFillVisibleRectWithCells();
 
+                SetFillVisibleRectWithCells();
             }
         }
-        void UpdateHorizontal(int _scrollDirection)
+
+        private void UpdateHorizontal(int _scrollDirection)
         {
             if (cells.Count < 1)
                 return;
@@ -344,6 +355,7 @@ namespace UI
                     cells.RemoveLast();
                     lastCell = cells.Last.Value;
                 }
+
                 SetFillVisibleRectWithCells();
             }
             else if (_scrollDirection < 0)
@@ -358,11 +370,12 @@ namespace UI
                     cells.RemoveFirst();
                     firstCell = cells.First.Value;
                 }
+
                 SetFillVisibleRectWithCells();
             }
-
         }
-        bool IsBeyondVisibleRect(ReuseCellData<T> cell)
+
+        private bool IsBeyondVisibleRect(ReuseCellData<T> cell)
         {
             if (CachedScrollRect.vertical)
             {
@@ -373,7 +386,6 @@ namespace UI
             }
             else
             {
-
                 if (cell.Right.x < visibleRect.x || cell.Left.x > visibleRect.x + visibleRect.width)
                 {
                     return true;

@@ -5,6 +5,13 @@ using UnityEngine;
 
 public class Cheat : MonoBehaviour
 {
+    private GameManager gameManager;
+
+    private void Start()
+    {
+        gameManager = GameManager.Instance;
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.I))
@@ -47,7 +54,7 @@ public class Cheat : MonoBehaviour
 
         if (GUI.Button(new Rect(50f, 350f, 250f, 150f), "대미지"))
         {
-            PlayerController.Instance.TakeDamage(10);
+            gameManager.PlayerController.TakeDamage(10);
         }
 #endif
     }

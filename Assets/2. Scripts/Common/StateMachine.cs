@@ -5,17 +5,18 @@ public enum PlayerState
 {
     Idle,
     Move,
-    Sprint
+    Attack
 }
 
 public enum EnemyState
 {
     Idle,
-    Chase,
-    Patrol
+    Move,
+    Attack,
+    Die
 }
 
-public interface IState<TOwner, TState> where TOwner : MonoBehaviour where TState : struct
+public interface IState<TOwner, TState> where TOwner : MonoBehaviour where TState : Enum
 {
     void OnEnter(TOwner owner);
     void OnUpdate(TOwner owner);
@@ -25,7 +26,7 @@ public interface IState<TOwner, TState> where TOwner : MonoBehaviour where TStat
     TState? CheckTransition(TOwner owner);
 }
 
-public class StateMachine<T, TState> where T : MonoBehaviour where TState : struct
+public class StateMachine<T, TState> where T : MonoBehaviour where TState : Enum
 {
     private T ownerEntity;
     private IState<T, TState> currentState;

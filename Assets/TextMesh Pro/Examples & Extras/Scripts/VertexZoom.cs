@@ -6,7 +6,6 @@ using System.Collections.Generic;
 
 namespace TMPro.Examples
 {
-
     public class VertexZoom : MonoBehaviour
     {
         public float AngleMultiplier = 1.0f;
@@ -17,31 +16,31 @@ namespace TMPro.Examples
         private bool hasTextChanged;
 
 
-        void Awake()
+        private void Awake()
         {
             m_TextComponent = GetComponent<TMP_Text>();
         }
 
-        void OnEnable()
+        private void OnEnable()
         {
             // Subscribe to event fired when text object has been regenerated.
             TMPro_EventManager.TEXT_CHANGED_EVENT.Add(ON_TEXT_CHANGED);
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             // UnSubscribe to event fired when text object has been regenerated.
             TMPro_EventManager.TEXT_CHANGED_EVENT.Remove(ON_TEXT_CHANGED);
         }
 
 
-        void Start()
+        private void Start()
         {
             StartCoroutine(AnimateVertexColors());
         }
 
 
-        void ON_TEXT_CHANGED(Object obj)
+        private void ON_TEXT_CHANGED(Object obj)
         {
             if (obj == m_TextComponent)
                 hasTextChanged = true;
@@ -51,21 +50,20 @@ namespace TMPro.Examples
         /// Method to animate vertex colors of a TMP Text object.
         /// </summary>
         /// <returns></returns>
-        IEnumerator AnimateVertexColors()
+        private IEnumerator AnimateVertexColors()
         {
-
             // We force an update of the text object since it would only be updated at the end of the frame. Ie. before this code is executed on the first frame.
             // Alternatively, we could yield and wait until the end of the frame when the text object will be generated.
             m_TextComponent.ForceMeshUpdate();
 
             TMP_TextInfo textInfo = m_TextComponent.textInfo;
 
-            Matrix4x4 matrix;
+            Matrix4x4      matrix;
             TMP_MeshInfo[] cachedMeshInfoVertexData = textInfo.CopyMeshInfoVertexData();
 
             // Allocations for sorting of the modified scales
             List<float> modifiedCharScale = new List<float>();
-            List<int> scaleSortingOrder = new List<int>();
+            List<int>   scaleSortingOrder = new List<int>();
 
             hasTextChanged = true;
 
@@ -130,7 +128,7 @@ namespace TMPro.Examples
 
                     // Determine the random scale change for each character.
                     float randomScale = Random.Range(1f, 1.5f);
-                    
+
                     // Add modified scale and index
                     modifiedCharScale.Add(randomScale);
                     scaleSortingOrder.Add(modifiedCharScale.Count - 1);
@@ -150,7 +148,7 @@ namespace TMPro.Examples
                     destinationVertices[vertexIndex + 3] += offset;
 
                     // Restore Source UVS which have been modified by the sorting
-                    Vector2[] sourceUVs0 = cachedMeshInfoVertexData[materialIndex].uvs0;
+                    Vector2[] sourceUVs0      = cachedMeshInfoVertexData[materialIndex].uvs0;
                     Vector2[] destinationUVs0 = textInfo.meshInfo[materialIndex].uvs0;
 
                     destinationUVs0[vertexIndex + 0] = sourceUVs0[vertexIndex + 0];
@@ -159,7 +157,7 @@ namespace TMPro.Examples
                     destinationUVs0[vertexIndex + 3] = sourceUVs0[vertexIndex + 3];
 
                     // Restore Source Vertex Colors
-                    Color32[] sourceColors32 = cachedMeshInfoVertexData[materialIndex].colors32;
+                    Color32[] sourceColors32      = cachedMeshInfoVertexData[materialIndex].colors32;
                     Color32[] destinationColors32 = textInfo.meshInfo[materialIndex].colors32;
 
                     destinationColors32[vertexIndex + 0] = sourceColors32[vertexIndex + 0];
@@ -187,6 +185,5 @@ namespace TMPro.Examples
                 yield return new WaitForSeconds(0.1f);
             }
         }
-
     }
 }

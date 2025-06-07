@@ -9,7 +9,7 @@ public enum PoolType
 
 public class ObjectPoolManager : SceneOnlySingleton<ObjectPoolManager>
 {
-    [SerializeField] List<GameObject> poolObjectList = new List<GameObject>();
+    [SerializeField] private List<GameObject> poolObjectList = new List<GameObject>();
     private List<IPoolObject> pools = new List<IPoolObject>();
     private Dictionary<PoolType, Queue<GameObject>> poolObjects = new Dictionary<PoolType, Queue<GameObject>>();
     private Dictionary<PoolType, GameObject> registeredObj = new Dictionary<PoolType, GameObject>();
@@ -134,7 +134,7 @@ public class ObjectPoolManager : SceneOnlySingleton<ObjectPoolManager>
         StartCoroutine(DelayedReturnObject(obj, action, returnTime));
     }
 
-    IEnumerator DelayedReturnObject(IPoolObject obj, UnityAction action, float returnTime)
+    private IEnumerator DelayedReturnObject(IPoolObject obj, UnityAction action, float returnTime)
     {
         if (!poolObjects.ContainsKey(obj.PoolType))
         {

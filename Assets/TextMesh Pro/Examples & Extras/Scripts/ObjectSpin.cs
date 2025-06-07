@@ -4,10 +4,8 @@ using System.Collections;
 
 namespace TMPro.Examples
 {
-    
     public class ObjectSpin : MonoBehaviour
     {
-
 #pragma warning disable 0414
 
         public float SpinSpeed = 5;
@@ -21,10 +19,16 @@ namespace TMPro.Examples
         private Color32 m_lightColor;
         private int frames = 0;
 
-        public enum MotionType { Rotation, BackAndForth, Translation };
+        public enum MotionType
+        {
+            Rotation,
+            BackAndForth,
+            Translation
+        };
+
         public MotionType Motion;
 
-        void Awake()
+        private void Awake()
         {
             m_transform = transform;
             m_initial_Rotation = m_transform.rotation.eulerAngles;
@@ -36,7 +40,7 @@ namespace TMPro.Examples
 
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
             if (Motion == MotionType.Rotation)
             {

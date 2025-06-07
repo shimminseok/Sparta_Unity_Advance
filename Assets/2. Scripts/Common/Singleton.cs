@@ -28,13 +28,13 @@ public class Singleton<T> : MonoBehaviour where T : Singleton<T>
         RemoveDuplicates();
     }
 
-    void RemoveDuplicates()
+    private void RemoveDuplicates()
     {
         if (instance != null && instance != this as T)
             Destroy(gameObject);
     }
 
-    static void SetupInstance()
+    private static void SetupInstance()
     {
         GameObject gameObj = new GameObject();
         gameObj.name = typeof(T).Name;

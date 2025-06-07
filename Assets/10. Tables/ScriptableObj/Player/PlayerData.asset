@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4109965f1f84054a88988b57f81a738, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
+  ID: 0
   PlayerStats:
   - StatType: 0
     ModifierType: 0
@@ -37,3 +38,9 @@ MonoBehaviour:
   - StatType: 7
     ModifierType: 0
     Value: 0
+  - StatType: 8
+    ModifierType: 0
+    Value: 100
+  - StatType: 9
+    ModifierType: 0
+    Value: 100

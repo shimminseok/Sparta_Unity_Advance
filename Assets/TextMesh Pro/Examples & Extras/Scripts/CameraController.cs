@@ -4,10 +4,14 @@ using System.Collections;
 
 namespace TMPro.Examples
 {
-    
     public class CameraController : MonoBehaviour
     {
-        public enum CameraModes { Follow, Isometric, Free }
+        public enum CameraModes
+        {
+            Follow,
+            Isometric,
+            Free
+        }
 
         private Transform cameraTransform;
         private Transform dummyTarget;
@@ -50,7 +54,7 @@ namespace TMPro.Examples
         private const string event_FollowDistance = "Slider - Camera Zoom";
 
 
-        void Awake()
+        private void Awake()
         {
             if (QualitySettings.vSyncCount > 0)
                 Application.targetFrameRate = 60;
@@ -66,7 +70,7 @@ namespace TMPro.Examples
 
 
         // Use this for initialization
-        void Start()
+        private void Start()
         {
             if (CameraTarget == null)
             {
@@ -77,7 +81,7 @@ namespace TMPro.Examples
         }
 
         // Update is called once per frame
-        void LateUpdate()
+        private void LateUpdate()
         {
             GetPlayerInput();
 
@@ -116,14 +120,11 @@ namespace TMPro.Examples
                 {
                     cameraTransform.LookAt(CameraTarget);
                 }
-
             }
-
         }
 
 
-
-        void GetPlayerInput()
+        private void GetPlayerInput()
         {
             moveVector = Vector3.zero;
 
@@ -192,13 +193,12 @@ namespace TMPro.Examples
                         if (OrbitalAngle < 0)
                             OrbitalAngle += 360;
                     }
-
                 }
 
                 // Check for left mouse button to select a new CameraTarget or to reset Follow position
                 if (Input.GetMouseButton(0))
                 {
-                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    Ray        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     RaycastHit hit;
 
                     if (Physics.Raycast(ray, out hit, 300, 1 << 10 | 1 << 11 | 1 << 12 | 1 << 14))
@@ -214,7 +214,6 @@ namespace TMPro.Examples
                             OrbitalAngle = 0;
                             MovementSmoothing = previousSmoothing;
                         }
-
                     }
                 }
 
@@ -248,9 +247,7 @@ namespace TMPro.Examples
                     moveVector = cameraTransform.TransformDirection(mouseX, mouseY, 0);
 
                     dummyTarget.Translate(-moveVector, Space.World);
-
                 }
-
             }
 
             // Check Pinching to Zoom in - out on Mobile device
@@ -263,7 +260,7 @@ namespace TMPro.Examples
                 Vector2 touch1PrevPos = touch1.position - touch1.deltaPosition;
 
                 float prevTouchDelta = (touch0PrevPos - touch1PrevPos).magnitude;
-                float touchDelta = (touch0.position - touch1.position).magnitude;
+                float touchDelta     = (touch0.position - touch1.position).magnitude;
 
                 float zoomDelta = prevTouchDelta - touchDelta;
 
@@ -273,20 +270,15 @@ namespace TMPro.Examples
                     // Limit FollowDistance between min & max values.
                     FollowDistance = Mathf.Clamp(FollowDistance, MinFollowDistance, MaxFollowDistance);
                 }
-
-
             }
 
             // Check MouseWheel to Zoom in-out
             if (mouseWheel < -0.01f || mouseWheel > 0.01f)
             {
-
                 FollowDistance -= mouseWheel * 5.0f;
                 // Limit FollowDistance between min & max values.
                 FollowDistance = Mathf.Clamp(FollowDistance, MinFollowDistance, MaxFollowDistance);
             }
-
-
         }
     }
 }

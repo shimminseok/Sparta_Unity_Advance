@@ -1,31 +1,51 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using PlayerStates;
 using UnityEngine;
 
 [RequireComponent(typeof(StatManager))]
 [RequireComponent(typeof(StatusEffectManager))]
-public class PlayerController : SceneOnlySingleton<PlayerController>
+public class PlayerController : BaseController<PlayerController, PlayerState>
 {
-    public StatManager         StatManager         { get; private set; }
-    public StatusEffectManager StatusEffectManager { get; private set; }
-    public EquipmentManager    EquipmentManager    { get; private set; }
+    public EquipmentManager EquipmentManager { get; private set; }
+
+    //StateMachine
+    private StateMachine<PlayerController, PlayerState> stateMachine;
+    private IState<PlayerController, PlayerState>[] states;
+    PlayerState currentState;
 
     protected override void Awake()
     {
         base.Awake();
-
-        StatManager = GetComponent<StatManager>();
-        StatusEffectManager = GetComponent<StatusEffectManager>();
+        GameManager.Instance.SetPlayerController(this);
         EquipmentManager = GetComponent<EquipmentManager>();
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
     }
 
-    // Update is called once per frame
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+    }
+
+    protected override IState<PlayerController, PlayerState> GetState(PlayerState state)
+    {
+        return state switch
+        {
+            PlayerState.Idle   => new IdleState(),
+            PlayerState.Move   => new MoveState(),
+            PlayerState.Attack => new AttackState(),
+            _                  => null
+        };
     }
 
 
@@ -38,10 +58,5 @@ public class PlayerController : SceneOnlySingleton<PlayerController>
         {
             print($"플레이어 사망");
         }
-    }
-
-    protected override void OnDestroy()
-    {
-        base.OnDestroy();
     }
 }

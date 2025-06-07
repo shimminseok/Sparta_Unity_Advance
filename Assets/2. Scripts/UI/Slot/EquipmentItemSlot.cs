@@ -11,10 +11,12 @@ public class EquipmentItemSlot : MonoBehaviour
     private EquipmentManager equipmentManager;
     private EquipmentItem equipmentItem;
 
+    private GameManager gameManager;
 
     private void Awake()
     {
-        equipmentManager = PlayerController.Instance.EquipmentManager;
+        gameManager = GameManager.Instance;
+        equipmentManager = gameManager.PlayerController.EquipmentManager;
     }
 
     private void Start()

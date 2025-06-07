@@ -14,6 +14,13 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IBeginDragHandler, IDr
     public bool IsEmpty => InventoryItem == null;
     public int  Index   { get; private set; }
 
+    private GameManager gameManager;
+
+    private void Awake()
+    {
+        gameManager = GameManager.Instance;
+    }
+
     public void SetItem(int index, InventoryItem item)
     {
         Index = index;
@@ -30,7 +37,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IBeginDragHandler, IDr
 
         if (item.ItemSo is EquipmentItemSO equipmentItemSo)
         {
-            if (PlayerController.Instance.EquipmentManager.EquipmentItems.TryGetValue(equipmentItemSo.EquipmentType, out var equipitem))
+            if (gameManager.PlayerController.EquipmentManager.EquipmentItems.TryGetValue(equipmentItemSo.EquipmentType, out var equipitem))
             {
                 SetEquipMark(equipitem != null && equipitem == InventoryItem);
             }
@@ -46,6 +53,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IBeginDragHandler, IDr
         icon.enabled = false;
         InventoryItem = null;
         itemQuantity.text = "";
+
         SetEquipMark(false);
     }
 
@@ -82,7 +90,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IBeginDragHandler, IDr
     {
         if (InventoryItem is EquipmentItem equipmentItem)
         {
-            var equipmentManager = PlayerController.Instance.EquipmentManager;
+            var equipmentManager = gameManager.PlayerController.EquipmentManager;
             equipmentItem.LinkedSlot = this;
             equipmentManager.EquipItem(equipmentItem);
             return;

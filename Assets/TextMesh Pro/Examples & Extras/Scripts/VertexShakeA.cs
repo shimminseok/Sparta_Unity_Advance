@@ -4,10 +4,8 @@ using System.Collections;
 
 namespace TMPro.Examples
 {
-
     public class VertexShakeA : MonoBehaviour
     {
-
         public float AngleMultiplier = 1.0f;
         public float SpeedMultiplier = 1.0f;
         public float ScaleMultiplier = 1.0f;
@@ -17,30 +15,30 @@ namespace TMPro.Examples
         private bool hasTextChanged;
 
 
-        void Awake()
+        private void Awake()
         {
             m_TextComponent = GetComponent<TMP_Text>();
         }
 
-        void OnEnable()
+        private void OnEnable()
         {
             // Subscribe to event fired when text object has been regenerated.
             TMPro_EventManager.TEXT_CHANGED_EVENT.Add(ON_TEXT_CHANGED);
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             TMPro_EventManager.TEXT_CHANGED_EVENT.Remove(ON_TEXT_CHANGED);
         }
 
 
-        void Start()
+        private void Start()
         {
             StartCoroutine(AnimateVertexColors());
         }
 
 
-        void ON_TEXT_CHANGED(Object obj)
+        private void ON_TEXT_CHANGED(Object obj)
         {
             if (obj = m_TextComponent)
                 hasTextChanged = true;
@@ -50,16 +48,15 @@ namespace TMPro.Examples
         /// Method to animate vertex colors of a TMP Text object.
         /// </summary>
         /// <returns></returns>
-        IEnumerator AnimateVertexColors()
+        private IEnumerator AnimateVertexColors()
         {
-
             // We force an update of the text object since it would only be updated at the end of the frame. Ie. before this code is executed on the first frame.
             // Alternatively, we could yield and wait until the end of the frame when the text object will be generated.
             m_TextComponent.ForceMeshUpdate();
 
             TMP_TextInfo textInfo = m_TextComponent.textInfo;
 
-            Matrix4x4 matrix;
+            Matrix4x4   matrix;
             Vector3[][] copyOfVertices = new Vector3[0][];
 
             hasTextChanged = true;
@@ -95,13 +92,12 @@ namespace TMPro.Examples
                 // Iterate through each line of the text.
                 for (int i = 0; i < lineCount; i++)
                 {
-
                     int first = textInfo.lineInfo[i].firstCharacterIndex;
-                    int last = textInfo.lineInfo[i].lastCharacterIndex;
+                    int last  = textInfo.lineInfo[i].lastCharacterIndex;
 
                     // Determine the center of each line
-                    Vector3 centerOfLine = (textInfo.characterInfo[first].bottomLeft + textInfo.characterInfo[last].topRight) / 2;
-                    Quaternion rotation = Quaternion.Euler(0, 0, Random.Range(-0.25f, 0.25f) * RotationMultiplier);
+                    Vector3    centerOfLine = (textInfo.characterInfo[first].bottomLeft + textInfo.characterInfo[last].topRight) / 2;
+                    Quaternion rotation     = Quaternion.Euler(0, 0, Random.Range(-0.25f, 0.25f) * RotationMultiplier);
 
                     // Iterate through each character of the line.
                     for (int j = first; j <= last; j++)
@@ -156,6 +152,5 @@ namespace TMPro.Examples
                 yield return new WaitForSeconds(0.1f);
             }
         }
-
     }
 }

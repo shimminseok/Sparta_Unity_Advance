@@ -26,10 +26,12 @@ public class InventoryManager : SceneOnlySingleton<InventoryManager>
 
     public event Action<int> OnInventorySlotUpdate;
 
+    private GameManager gameManager;
 
     protected override void Awake()
     {
         base.Awake();
+        gameManager = GameManager.Instance;
         InitInventory();
     }
 
@@ -114,7 +116,7 @@ public class InventoryManager : SceneOnlySingleton<InventoryManager>
             return;
         foreach (StatusEffectData itemSoStatusEffect in consumableItemSo.StatusEffects)
         {
-            PlayerController.Instance.StatusEffectManager.ApplyEffect(BuffFactory.CreateBuff(itemSoStatusEffect));
+            gameManager.PlayerController.StatusEffectManager.ApplyEffect(BuffFactory.CreateBuff(itemSoStatusEffect));
         }
 
         item.Quantity -= amount;

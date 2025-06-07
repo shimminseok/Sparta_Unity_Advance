@@ -38,7 +38,7 @@ public class DragManager : SceneOnlySingleton<DragManager>
         IsDragging = false;
     }
 
-    void SetDragSlot(Sprite img)
+    private void SetDragSlot(Sprite img)
     {
         dragImage.gameObject.SetActive(true);
         dragImage.sprite = img;

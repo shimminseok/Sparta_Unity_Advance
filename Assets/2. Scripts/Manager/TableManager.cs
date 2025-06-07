@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TableManager : Singleton<TableManager>
 {
-    [SerializeField] List<ScriptableObject> tableList = new List<ScriptableObject>();
+    [SerializeField] private List<ScriptableObject> tableList = new List<ScriptableObject>();
 
     private Dictionary<Type, ITable> tableDic = new Dictionary<Type, ITable>();
 

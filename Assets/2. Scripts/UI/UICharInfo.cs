@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.ComTypes;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,8 @@ public class UICharInfo : UIBase<UICharInfo>, IUIBase
     [SerializeField] private Transform slotRoot;
     [SerializeField] private EquipmentItemSlot[] equipmentSlots;
 
+    private GameManager gameManager;
+
     protected override void Awake()
     {
         base.Awake();
@@ -19,8 +22,9 @@ public class UICharInfo : UIBase<UICharInfo>, IUIBase
 
     private void Start()
     {
+        gameManager = GameManager.Instance;
         InstantiateSlot();
-        PlayerController.Instance.EquipmentManager.OnEquipmentChanged += UpdateEquipmentSlot;
+        gameManager.PlayerController.EquipmentManager.OnEquipmentChanged += UpdateEquipmentSlot;
     }
 
     public override void Open()
@@ -35,7 +39,7 @@ public class UICharInfo : UIBase<UICharInfo>, IUIBase
 
     private void InstantiateSlot()
     {
-        var statDic = PlayerController.Instance.StatManager.PlayerStat;
+        var statDic = gameManager.PlayerController.StatManager.PlayerStat;
 
         foreach (var stat in statDic)
         {
@@ -56,8 +60,8 @@ public class UICharInfo : UIBase<UICharInfo>, IUIBase
 
     protected void OnDisable()
     {
-        if (PlayerController.Instance && PlayerController.Instance.EquipmentManager)
-            PlayerController.Instance.EquipmentManager.OnEquipmentChanged -= UpdateEquipmentSlot;
+        if (gameManager && gameManager.PlayerController.EquipmentManager)
+            gameManager.PlayerController.EquipmentManager.OnEquipmentChanged -= UpdateEquipmentSlot;
     }
 
     protected override void OnDestroy()

@@ -30,6 +30,9 @@ public enum StatType
 
     Dodge,
     CriticalChance,
+
+    MaxMp,
+    CurMp,
 }
 
 public enum StatModifierType
