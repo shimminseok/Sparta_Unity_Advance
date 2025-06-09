@@ -15,15 +15,22 @@ public class Cheat : MonoBehaviour
 
     private void OnGUI()
     {
+        float buttonWidth  = 100f;
+        float buttonHeight = 30f;
+        float spacing      = 5f;
+
+        float x = 10f;
+        float y = Screen.height - buttonHeight - 50f;
+
 #if UNITY_EDITOR
-        if (GUI.Button(new Rect(50f, 50f, 250f, 150f), "골드 증가"))
+        if (GUI.Button(new Rect(x, y, buttonWidth, buttonHeight), "골드 증가"))
         {
             AccountManager.Instance.AddGold(100000);
         }
 
-        if (GUI.Button(new Rect(50f, 200f, 250f, 150f), "아이템 획득"))
+        if (GUI.Button(new Rect(x, y - (buttonHeight + spacing), buttonWidth, buttonHeight), "아이템 획득"))
         {
-            foreach (var data in TableManager.Instance.GetTable<ItemTable>().dataDic.Values)
+            foreach (var data in TableManager.Instance.GetTable<ItemTable>().DataDic.Values)
             {
                 int amount = 1;
                 if (data is ConsumableItemSO consumable)
@@ -40,7 +47,7 @@ public class Cheat : MonoBehaviour
             }
         }
 
-        if (GUI.Button(new Rect(50f, 350f, 250f, 150f), "대미지"))
+        if (GUI.Button(new Rect(x, y - (buttonHeight + spacing) * 2, buttonWidth, buttonHeight), "대미지"))
         {
             gameManager.PlayerController.TakeDamage(30);
         }
