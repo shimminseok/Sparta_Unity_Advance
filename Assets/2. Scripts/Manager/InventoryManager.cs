@@ -15,7 +15,20 @@ public class InventoryItem
         Quantity = quantity;
     }
 
+    public event Action OnItemChanged;
+
     public virtual InventoryItem Clone() => new InventoryItem(ItemSo, Quantity);
+
+    public void ChangeQuantity(int amount)
+    {
+        Quantity += amount;
+        ItemChanged();
+    }
+
+    public void ItemChanged()
+    {
+        OnItemChanged?.Invoke();
+    }
 }
 
 public class InventoryManager : SceneOnlySingleton<InventoryManager>
@@ -64,11 +77,11 @@ public class InventoryManager : SceneOnlySingleton<InventoryManager>
     private void AddStackableItem(InventoryItem item, int amount = 1)
     {
         InventoryItem findItem = Inventory.Find(x => x != null && x.ItemSo.ID == item.ItemSo.ID);
-        int           index    = 0;
+
         if (findItem == null)
         {
             // To Do 인벤토리가 꽉찼는지 확인
-            index = Inventory.IndexOf(null);
+            int index = Inventory.IndexOf(null);
             if (index < 0)
             {
                 Debug.Log("인벤토리 공간이 부족합니다.");
@@ -80,14 +93,12 @@ public class InventoryManager : SceneOnlySingleton<InventoryManager>
             }
 
             Inventory[index] = findItem;
+            OnInventorySlotUpdate?.Invoke(index);
         }
         else
         {
-            index = Inventory.IndexOf(findItem);
-            findItem.Quantity += amount;
+            findItem.ChangeQuantity(amount);
         }
-
-        OnInventorySlotUpdate?.Invoke(index);
     }
 
     /// <summary>
@@ -119,12 +130,12 @@ public class InventoryManager : SceneOnlySingleton<InventoryManager>
             gameManager.PlayerController.StatusEffectManager.ApplyEffect(BuffFactory.CreateBuff(itemSoStatusEffect));
         }
 
-        item.Quantity -= amount;
+        item.ChangeQuantity(-amount);
         if (item.Quantity <= 0)
             RemoveItem(index);
 
 
-        OnInventorySlotUpdate?.Invoke(index);
+        // OnInventorySlotUpdate?.Invoke(index);
     }
 
     public void DropItem(int index, int amount)
@@ -133,7 +144,7 @@ public class InventoryManager : SceneOnlySingleton<InventoryManager>
         if (data == null || data.Quantity < amount)
             return;
 
-        data.Quantity -= amount;
+        data.ChangeQuantity(-amount);
         if (data.Quantity == 0)
             RemoveItem(index);
     }
@@ -142,7 +153,6 @@ public class InventoryManager : SceneOnlySingleton<InventoryManager>
     public void SwichItem(int from, int to)
     {
         (Inventory[from], Inventory[to]) = (Inventory[to], Inventory[from]);
-
 
         OnInventorySlotUpdate?.Invoke(from);
         OnInventorySlotUpdate?.Invoke(to);

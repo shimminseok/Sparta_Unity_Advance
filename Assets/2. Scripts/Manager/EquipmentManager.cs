@@ -17,6 +17,17 @@ public class EquipmentItem : InventoryItem
     }
 
     public override InventoryItem Clone() => new EquipmentItem(ItemSo);
+
+    public void Enhancement()
+    {
+        EnhanceLevel++;
+        ItemChanged();
+    }
+
+    public string GetEnhanceCountStr()
+    {
+        return EnhanceLevel > 0 ? $"+{EnhanceLevel}" : string.Empty;
+    }
 }
 
 public class EquipmentManager : MonoBehaviour
@@ -25,7 +36,7 @@ public class EquipmentManager : MonoBehaviour
 
     public event Action<EquipmentType> OnEquipmentChanged;
 
-    GameManager gameManager => GameManager.Instance;
+    private GameManager gameManager => GameManager.Instance;
 
 
     public void EquipItem(EquipmentItem data)

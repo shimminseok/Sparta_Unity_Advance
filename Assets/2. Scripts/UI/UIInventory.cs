@@ -8,13 +8,14 @@ public class UIInventory : UIBase<UIInventory>, IUIBase
 {
     [SerializeField] private GameObject inventorySlotPrefabs;
     [SerializeField] private Transform scrollviewContent;
-
+    [SerializeField] private UIItemInfo itemInfoPanel;
 
 
     private InventorySlot[] inventorySlots;
     private InventoryManager inventoryManager;
-    
+
     public InventorySlot SelectedItem { get; private set; }
+
     protected override void Awake()
     {
         base.Awake();
@@ -61,6 +62,8 @@ public class UIInventory : UIBase<UIInventory>, IUIBase
     {
         if (SelectedItem == null)
             return;
+
+        itemInfoPanel.Open(SelectedItem);
     }
 
     public override void Open()
@@ -72,6 +75,7 @@ public class UIInventory : UIBase<UIInventory>, IUIBase
     {
         SelectedItem?.DeSelectedSlot();
         SelectedItem = null;
+        itemInfoPanel.Close();
         base.Close();
     }
 }

@@ -7,6 +7,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IBeginDragHandler, IDr
 {
     [SerializeField] private Image icon;
     [SerializeField] private TextMeshProUGUI itemQuantity;
+    [SerializeField] private TextMeshProUGUI enhanceCountTxt;
     [SerializeField] private TextMeshProUGUI equipMark;
     public InventoryItem InventoryItem { get; private set; }
     private bool isSelected;
@@ -28,20 +29,12 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IBeginDragHandler, IDr
 
         icon.enabled = true;
         InventoryItem = item;
+        InventoryItem.OnItemChanged -= Refresh; //중복 등록을 막기 위해서
+        InventoryItem.OnItemChanged += Refresh;
         icon.sprite = item.ItemSo.ItemSprite;
-        itemQuantity.text = item.Quantity > 1 ? $"x{item.Quantity}" : string.Empty;
 
-        if (item.ItemSo is EquipmentItemSO equipmentItemSo)
-        {
-            if (gameManager.PlayerController.EquipmentManager.EquipmentItems.TryGetValue(equipmentItemSo.EquipmentType, out var equipitem))
-            {
-                SetEquipMark(equipitem != null && equipitem == InventoryItem);
-            }
-        }
-        else
-        {
-            SetEquipMark(false);
-        }
+
+        Refresh();
     }
 
     public void EmptySlot()
@@ -49,8 +42,23 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IBeginDragHandler, IDr
         icon.enabled = false;
         InventoryItem = null;
         itemQuantity.text = "";
-
+        enhanceCountTxt.text = "";
         SetEquipMark(false);
+    }
+
+    private void Refresh()
+    {
+        itemQuantity.text = InventoryItem.Quantity > 1 ? $"x{InventoryItem.Quantity}" : string.Empty;
+        enhanceCountTxt.gameObject.SetActive(InventoryItem is EquipmentItem);
+        if (InventoryItem is EquipmentItem equipItem)
+        {
+            SetEquipMark(equipItem.IsEquipped);
+            enhanceCountTxt.text = equipItem.GetEnhanceCountStr();
+        }
+        else
+        {
+            SetEquipMark(false);
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)

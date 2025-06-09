@@ -26,7 +26,7 @@ public class EnemyManager : SceneOnlySingleton<EnemyManager>
         {
             var        randomCircle = Random.insideUnitCircle * 15f;
             var        spawnPos     = new Vector3(randomCircle.x, 1f, randomCircle.y);
-            MonsterSO  monsterSo    = monsterTb.GetDataByID(Random.Range(1, monsterTb.dataDic.Count + 1));
+            MonsterSO  monsterSo    = monsterTb.GetDataByID(Random.Range(1, monsterTb.DataDic.Count + 1));
             GameObject go           = Instantiate(monsterSo.Prefab, spawnPos, Quaternion.identity);
             var        controller   = go.GetComponent<EnemyController>();
             controller.StatManager.Initialize(monsterSo);
