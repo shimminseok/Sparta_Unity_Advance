@@ -48,7 +48,15 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IBeginDragHandler, IDr
 
     private void Refresh()
     {
-        itemQuantity.text = InventoryItem.Quantity > 1 ? $"x{InventoryItem.Quantity}" : string.Empty;
+        if (InventoryItem.ItemSo is ConsumableItemSO consumableItemSo && InventoryItem.Quantity > 1)
+        {
+            itemQuantity.text = InventoryItem.Quantity > consumableItemSo.MaxStack ? $"x{consumableItemSo.MaxStack}+" : $"x{InventoryItem.Quantity}";
+        }
+        else
+        {
+            itemQuantity.text = string.Empty;
+        }
+
         enhanceCountTxt.gameObject.SetActive(InventoryItem is EquipmentItem);
         if (InventoryItem is EquipmentItem equipItem)
         {
