@@ -19,8 +19,8 @@ public class UIHUD : MonoBehaviour
     {
         gameManager = GameManager.Instance;
         playerStatManager = gameManager.PlayerController.StatManager;
-        playerStatManager.PlayerStat[StatType.CurHp].OnValueChanged += UpdateHpUIWrapper;
-        playerStatManager.PlayerStat[StatType.CurMp].OnValueChanged += UpdateMpUIWrapper;
+        playerStatManager.Stats[StatType.CurHp].OnValueChanged += UpdateHpUIWrapper;
+        playerStatManager.Stats[StatType.CurMp].OnValueChanged += UpdateMpUIWrapper;
 
         AccountManager.Instance.OnGoldChanged += UpdateGoldUI;
     }
@@ -52,7 +52,7 @@ public class UIHUD : MonoBehaviour
 
     private void OnDisable()
     {
-        playerStatManager.PlayerStat[StatType.CurHp].OnValueChanged -= UpdateHpUIWrapper;
-        playerStatManager.PlayerStat[StatType.CurMp].OnValueChanged -= UpdateMpUIWrapper;
+        playerStatManager.Stats[StatType.CurHp].OnValueChanged -= UpdateHpUIWrapper;
+        playerStatManager.Stats[StatType.CurMp].OnValueChanged -= UpdateMpUIWrapper;
     }
 }

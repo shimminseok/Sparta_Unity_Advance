@@ -8,7 +8,7 @@ public class UIBase<T> : SceneOnlySingleton<T> where T : UIBase<T>, IUIBase
     protected override void Awake()
     {
         base.Awake();
-        Close();
+        content.SetActive(false);
     }
 
     public virtual void Open()

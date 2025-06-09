@@ -25,12 +25,8 @@ public class EquipmentManager : MonoBehaviour
 
     public event Action<EquipmentType> OnEquipmentChanged;
 
-    GameManager gameManager;
+    GameManager gameManager => GameManager.Instance;
 
-    private void Start()
-    {
-        gameManager = GameManager.Instance;
-    }
 
     public void EquipItem(EquipmentItem data)
     {

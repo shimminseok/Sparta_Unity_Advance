@@ -11,11 +11,10 @@ public class EquipmentItemSlot : MonoBehaviour
     private EquipmentManager equipmentManager;
     private EquipmentItem equipmentItem;
 
-    private GameManager gameManager;
+    private GameManager gameManager => GameManager.Instance;
 
     private void Awake()
     {
-        gameManager = GameManager.Instance;
         equipmentManager = gameManager.PlayerController.EquipmentManager;
     }
 
@@ -31,10 +30,13 @@ public class EquipmentItemSlot : MonoBehaviour
 
     public void EquipmentItem()
     {
-        if (equipmentManager.EquipmentItems[equipmentType] == null)
+        if (equipmentManager.EquipmentItems.TryGetValue(equipmentType, out EquipmentItem equipmentItem))
         {
-            EmptySlot();
-            return;
+            if (equipmentItem == null)
+            {
+                EmptySlot();
+                return;
+            }
         }
 
         equipmentItemIcon.enabled = true;

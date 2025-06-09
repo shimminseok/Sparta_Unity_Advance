@@ -19,13 +19,13 @@ MonoBehaviour:
   ItemSprite: {fileID: 21300000, guid: 6f17b16f02b2246499ac554b97a16d4a, type: 3}
   ItemGrade: 1
   StatusEffects:
-  - EffectType: 7
+  - EffectType: 4
     Stat:
-      StatType: 1
-      ModifierType: 0
-      Value: 10
-    Duration: 5
-    TickInterval: 1
+      StatType: 2
+      ModifierType: 2
+      Value: 0.1
+    Duration: 10
+    TickInterval: 0
   CoolTime: 10
   IsStackable: 1
   MaxStack: 9999

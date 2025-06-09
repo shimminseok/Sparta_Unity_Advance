@@ -12,18 +12,6 @@ public class Cheat : MonoBehaviour
         gameManager = GameManager.Instance;
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            UIManager.Instance.CheckOpenPopup(UIInventory.Instance);
-        }
-        else if (Input.GetKeyDown(KeyCode.P))
-        {
-            UIManager.Instance.CheckOpenPopup(UICharInfo.Instance);
-        }
-    }
-
 
     private void OnGUI()
     {
@@ -54,7 +42,7 @@ public class Cheat : MonoBehaviour
 
         if (GUI.Button(new Rect(50f, 350f, 250f, 150f), "대미지"))
         {
-            gameManager.PlayerController.TakeDamage(10);
+            gameManager.PlayerController.TakeDamage(30);
         }
 #endif
     }

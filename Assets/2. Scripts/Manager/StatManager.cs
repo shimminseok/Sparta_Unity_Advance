@@ -7,23 +7,34 @@ using UnityEngine;
 
 public class StatManager : MonoBehaviour
 {
-    public Dictionary<StatType, StatBase> PlayerStat { get; private set; } = new Dictionary<StatType, StatBase>();
+    public Dictionary<StatType, StatBase> Stats { get; private set; } = new Dictionary<StatType, StatBase>();
 
 
     private void Awake()
     {
-        Initialize();
     }
 
-    private void Initialize()
+    /// <summary>
+    /// 플레이어의 스탯을 초기화 시켜주는 메서드
+    /// </summary>
+    /// <param name="player"></param>
+    public void Initialize(PlayerSO player)
     {
-        var playerData = TableManager.Instance.GetTable<PlayerTable>();
-        foreach (PlayerSO playerSo in playerData.dataDic.Values)
+        foreach (var stat in player.PlayerStats)
         {
-            foreach (var stat in playerSo.PlayerStats)
-            {
-                PlayerStat[stat.StatType] = BaseStatFactory(stat.StatType, stat.Value);
-            }
+            Stats[stat.StatType] = BaseStatFactory(stat.StatType, stat.Value);
+        }
+    }
+
+    /// <summary>
+    /// 몬스터의 스탯을 초기화 시켜주는 메서드
+    /// </summary>
+    /// <param name="monster"></param>
+    public void Initialize(MonsterSO monster)
+    {
+        foreach (StatData monsterStat in monster.Stats)
+        {
+            Stats[monsterStat.StatType] = BaseStatFactory(monsterStat.StatType, monsterStat.Value);
         }
     }
 
@@ -40,17 +51,17 @@ public class StatManager : MonoBehaviour
 
     public T GetStat<T>(StatType type) where T : StatBase
     {
-        return PlayerStat[type] as T;
+        return Stats[type] as T;
     }
 
     public float GetValue(StatType type)
     {
-        return PlayerStat[type].GetCurrent();
+        return Stats[type].GetCurrent();
     }
 
     public void Recover(StatType statType, float value)
     {
-        if (PlayerStat[statType] is ResourceStat res)
+        if (Stats[statType] is ResourceStat res)
         {
             if (res.CurrentValue < res.MaxValue)
             {
@@ -62,7 +73,7 @@ public class StatManager : MonoBehaviour
 
     public void Consume(StatType statType, float value)
     {
-        if (PlayerStat[statType] is ResourceStat res)
+        if (Stats[statType] is ResourceStat res)
         {
             if (res.CurrentValue > 0)
             {
@@ -74,7 +85,7 @@ public class StatManager : MonoBehaviour
 
     public void ApplyStatEffect(StatType type, StatModifierType valueType, float value)
     {
-        if (PlayerStat[type] is not CalculatedStat stat) return;
+        if (Stats[type] is not CalculatedStat stat) return;
 
         switch (valueType)
         {
@@ -96,7 +107,7 @@ public class StatManager : MonoBehaviour
 
     private void SyncCurrentWithMax(StatType curStatType, CalculatedStat stat)
     {
-        if (PlayerStat.TryGetValue(curStatType, out var res) && res is ResourceStat curStat)
+        if (Stats.TryGetValue(curStatType, out var res) && res is ResourceStat curStat)
         {
             curStat.SetMax(stat.FinalValue);
         }

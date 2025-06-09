@@ -4,7 +4,20 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    public PlayerController PlayerController { get; private set; }
+    private PlayerController playerController;
+
+    public PlayerController PlayerController
+    {
+        get
+        {
+            if (playerController == null)
+            {
+                playerController = FindObjectOfType<PlayerController>();
+            }
+
+            return playerController;
+        }
+    }
 
     void Start()
     {
@@ -16,13 +29,13 @@ public class GameManager : Singleton<GameManager>
     }
 
 
-    public void SetPlayerController(PlayerController playerController)
+    public void SetPlayerController(PlayerController player)
     {
-        PlayerController = playerController;
+        this.playerController = player;
     }
 
     public void OnSceneChanged()
     {
-        PlayerController = null;
+        playerController = null;
     }
 }

@@ -33,6 +33,8 @@ public class UIManager : Singleton<UIManager>
 
     public void ClosePanel(IUIBase panel)
     {
+        if (!openedUI.Contains(panel))
+            return;
         openedUI.Remove(panel);
         IsOpenUI = false;
     }

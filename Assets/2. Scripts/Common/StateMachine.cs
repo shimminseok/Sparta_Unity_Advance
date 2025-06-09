@@ -23,7 +23,7 @@ public interface IState<TOwner, TState> where TOwner : MonoBehaviour where TStat
     void OnFixedUpdate(TOwner owner);
     void OnExit(TOwner entity);
 
-    TState? CheckTransition(TOwner owner);
+    TState CheckTransition(TOwner owner);
 }
 
 public class StateMachine<T, TState> where T : MonoBehaviour where TState : Enum

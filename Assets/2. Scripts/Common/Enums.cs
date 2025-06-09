@@ -33,6 +33,8 @@ public enum StatType
 
     MaxMp,
     CurMp,
+
+    AttackRange,
 }
 
 public enum StatModifierType

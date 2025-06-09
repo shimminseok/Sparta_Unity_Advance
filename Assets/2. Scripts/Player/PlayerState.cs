@@ -12,6 +12,7 @@ namespace PlayerStates
 
         public void OnUpdate(PlayerController owner)
         {
+            owner.FindTarget();
         }
 
         public void OnFixedUpdate(PlayerController owner)
@@ -24,6 +25,9 @@ namespace PlayerStates
 
         public PlayerState CheckTransition(PlayerController owner)
         {
+            if (owner.Target != null)
+                return PlayerState.Move;
+
             return PlayerState.Idle;
         }
     }
@@ -36,6 +40,7 @@ namespace PlayerStates
 
         public void OnUpdate(PlayerController owner)
         {
+            owner.Movement();
         }
 
         public void OnFixedUpdate(PlayerController owner)
@@ -48,18 +53,37 @@ namespace PlayerStates
 
         public PlayerState CheckTransition(PlayerController owner)
         {
-            return PlayerState.Idle;
+            if (owner.Agent.remainingDistance <= owner.Agent.stoppingDistance)
+                return PlayerState.Attack;
+            else if (owner.Target == null || owner.Target.IsDead)
+                return PlayerState.Idle;
+
+            return PlayerState.Move;
         }
     }
 
     public class AttackState : IState<PlayerController, PlayerState>
     {
+        private float attackTimer;
+        private readonly float attackDelay;
+
+        public AttackState(float atkSpd)
+        {
+            attackDelay = atkSpd;
+        }
+
         public void OnEnter(PlayerController owner)
         {
         }
 
         public void OnUpdate(PlayerController owner)
         {
+            attackTimer += Time.deltaTime;
+            if (attackTimer >= attackDelay)
+            {
+                attackTimer = 0f;
+                owner.Attack();
+            }
         }
 
         public void OnFixedUpdate(PlayerController owner)
@@ -68,11 +92,18 @@ namespace PlayerStates
 
         public void OnExit(PlayerController entity)
         {
+            attackTimer = 0f;
         }
 
         public PlayerState CheckTransition(PlayerController owner)
         {
-            return PlayerState.Idle;
+            if (owner.Target == null || owner.Target.IsDead)
+                return PlayerState.Idle;
+            else if (owner.Agent.remainingDistance > owner.Agent.stoppingDistance)
+                return PlayerState.Move;
+
+
+            return PlayerState.Attack;
         }
     }
 }

@@ -14,12 +14,8 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IBeginDragHandler, IDr
     public bool IsEmpty => InventoryItem == null;
     public int  Index   { get; private set; }
 
-    private GameManager gameManager;
+    private GameManager gameManager => GameManager.Instance;
 
-    private void Awake()
-    {
-        gameManager = GameManager.Instance;
-    }
 
     public void SetItem(int index, InventoryItem item)
     {
