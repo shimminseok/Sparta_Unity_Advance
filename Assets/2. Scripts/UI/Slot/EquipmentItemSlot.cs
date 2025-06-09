@@ -18,10 +18,6 @@ public class EquipmentItemSlot : MonoBehaviour
         equipmentManager = gameManager.PlayerController.EquipmentManager;
     }
 
-    private void Start()
-    {
-    }
-
     private void EmptySlot()
     {
         equipmentItemIcon.enabled = false;
@@ -30,7 +26,7 @@ public class EquipmentItemSlot : MonoBehaviour
 
     public void EquipmentItem()
     {
-        if (equipmentManager.EquipmentItems.TryGetValue(equipmentType, out EquipmentItem equipmentItem))
+        if (equipmentManager.EquipmentItems.TryGetValue(equipmentType, out equipmentItem))
         {
             if (equipmentItem == null)
             {
