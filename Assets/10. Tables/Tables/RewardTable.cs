@@ -1,18 +1,16 @@
-﻿using _10._Tables.ScriptableObj;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace _10._Tables.Tables
+[CreateAssetMenu(fileName = "RewardTable", menuName = "Tables/RewardTable", order = 0)]
+public class RewardTable : BaseTable<string, RewardSO>
 {
-    [CreateAssetMenu(fileName = "RewardTable", menuName = "Tables/RewardTable", order = 0)]
-    public class RewardTable : BaseTable<string, RewardSO>
+    protected override string[] DataPath => new[] { "Assets/10. Tables/ScriptableObj/Reward" };
+
+    public override void CreateTable()
     {
-        public override void CreateTable()
+        Type = GetType();
+        foreach (RewardSO item in dataList)
         {
-            base.CreateTable();
-            foreach (RewardSO item in dataList)
-            {
-                DataDic[item.ID] = item;
-            }
+            DataDic[item.ID] = item;
         }
     }
 }

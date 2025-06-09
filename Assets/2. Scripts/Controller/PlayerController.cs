@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using _10._Tables.ScriptableObj;
 using PlayerStates;
 using UnityEngine;
 

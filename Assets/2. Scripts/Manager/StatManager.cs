@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using _10._Tables.ScriptableObj;
 using UnityEngine;
 
 

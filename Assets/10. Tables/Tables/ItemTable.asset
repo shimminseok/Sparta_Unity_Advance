@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: ItemTable
   m_EditorClassIdentifier: 
   dataList:
+  - {fileID: 11400000, guid: 58ffad89fbbe2ef43b5691890512a4c5, type: 2}
+  - {fileID: 11400000, guid: 4ca5c36c35643584e82e9b11905f5162, type: 2}
+  - {fileID: 11400000, guid: 14d7f2d5cd3b8294a8c0eccc71b5e9da, type: 2}
   - {fileID: 11400000, guid: a5f70295ffd0599449042f00b88368d0, type: 2}
   - {fileID: 11400000, guid: 2e844106c24157d48b5a69281ee4ba54, type: 2}
   - {fileID: 11400000, guid: 37c5e0e92e430dc4a8e06ec4e712e2dd, type: 2}
@@ -30,6 +33,3 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 42e3ced0c93acbd44ad8bf1deb91655f, type: 2}
   - {fileID: 11400000, guid: da0320fbb985f9b4691fd166cc71136b, type: 2}
   - {fileID: 11400000, guid: db7d9b4c87bd267498daaf0b1d13c9ac, type: 2}
-  - {fileID: 11400000, guid: 14d7f2d5cd3b8294a8c0eccc71b5e9da, type: 2}
-  - {fileID: 11400000, guid: 58ffad89fbbe2ef43b5691890512a4c5, type: 2}
-  - {fileID: 11400000, guid: 4ca5c36c35643584e82e9b11905f5162, type: 2}

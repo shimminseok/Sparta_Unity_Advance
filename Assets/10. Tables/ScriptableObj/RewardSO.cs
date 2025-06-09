@@ -1,23 +1,20 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace _10._Tables.ScriptableObj
+[CreateAssetMenu(fileName = "RewardSO", menuName = "ScriptableObject/RewardSO", order = 0)]
+public class RewardSO : ScriptableObject
 {
-    [CreateAssetMenu(fileName = "RewardSO", menuName = "ScriptableObject/RewardSO", order = 0)]
-    public class RewardSO : ScriptableObject
-    {
-        public string ID;
-        public string RewardName;
-        public bool HasRewardGold;
+    public string ID;
+    public string RewardName;
+    public bool HasRewardGold;
 
-        [BoolShowIf("HasRewardGold")]
-        public int RewardGold;
+    [BoolShowIf("HasRewardGold")]
+    public int RewardGold;
 
-        public bool HasRewardExp;
+    public bool HasRewardExp;
 
-        [BoolShowIf("HasRewardExp")]
-        public int RewardExp;
+    [BoolShowIf("HasRewardExp")]
+    public int RewardExp;
 
-        public List<ItemSO> RewardItems;
-    }
+    public List<ItemSO> RewardItems;
 }

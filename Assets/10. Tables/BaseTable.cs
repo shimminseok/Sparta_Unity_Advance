@@ -3,20 +3,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class BaseTable<TKey, TValue> : ScriptableObject, ITable where TKey : notnull
+public abstract class BaseTable<TKey, TValue> : ScriptableObject, ITable where TKey : notnull where TValue : ScriptableObject
 {
     [SerializeField] protected List<TValue> dataList = new List<TValue>();
 
     public Dictionary<TKey, TValue> DataDic { get; private set; } = new Dictionary<TKey, TValue>();
 
-    public Type Type { get; private set; }
+    public             Type     Type     { get; protected set; }
+    protected abstract string[] DataPath { get; }
 
-    public virtual void CreateTable()
-    {
-        Type = GetType();
-    }
+    public abstract void CreateTable();
 
-    public virtual TValue GetDataByID(TKey id)
+    public TValue GetDataByID(TKey id)
     {
         if (DataDic.TryGetValue(id, out TValue value))
             return value;
@@ -24,4 +22,32 @@ public class BaseTable<TKey, TValue> : ScriptableObject, ITable where TKey : not
         Debug.LogError($"ID {id}를 찾을 수 없습니다. Type :{Type})");
         return default;
     }
+
+    private void OnEnable()
+    {
+        AutoAssignDatas();
+    }
+#if UNITY_EDITOR
+    public void AutoAssignDatas()
+    {
+        dataList.Clear();
+
+        string[] guids =
+            UnityEditor.AssetDatabase.FindAssets($"t:{typeof(TValue)}", DataPath);
+
+        foreach (string guid in guids)
+        {
+            string path  = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
+            var    asset = UnityEditor.AssetDatabase.LoadAssetAtPath<TValue>(path);
+
+            if (asset != null && !dataList.Contains(asset))
+            {
+                dataList.Add(asset);
+            }
+        }
+
+        Debug.Log($"[{typeof(TValue)}] 데이터 등록 완료!");
+        UnityEditor.EditorUtility.SetDirty(this);
+    }
+#endif
 }
