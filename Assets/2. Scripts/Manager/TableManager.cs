@@ -16,6 +16,7 @@ public class TableManager : Singleton<TableManager>
         {
             if (tableObj is ITable table)
             {
+                table.AutoAssignDatas();
                 table.CreateTable();
                 tableDic[table.Type] = table;
             }

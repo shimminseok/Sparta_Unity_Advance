@@ -23,10 +23,6 @@ public abstract class BaseTable<TKey, TValue> : ScriptableObject, ITable where T
         return default;
     }
 
-    private void OnEnable()
-    {
-        AutoAssignDatas();
-    }
 #if UNITY_EDITOR
     public void AutoAssignDatas()
     {
