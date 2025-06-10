@@ -32,6 +32,7 @@
 <details>
 <summary>기본 UI 구현(난이도: ★☆☆☆☆)</summary>
 <div markdown="1">
+ 
  - 게임 화면에 HP, MP, 경험치 바, 현재 스테이지, 골드 및 재화 등의 정보를 표시합니다.
  
 </div>
