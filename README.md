@@ -51,7 +51,7 @@
 <details>
 <summary>아이템 및 업그레이드 시스템 (난이도: ★★★☆☆)</summary>
 <div markdown="1">
-토글 안에 넣을 이미지나 글
+ ![Image](https://github.com/user-attachments/assets/44a300d3-ec31-4c8e-9334-528c046091ad)
 </div>
 </details>
 
