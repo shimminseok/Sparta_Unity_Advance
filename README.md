@@ -44,7 +44,7 @@
 <div markdown="1">
 
  - 플레이어가 직접 조작하지 않아도 앞을 향해 나아가며, 적을 발견하면 일정 시간마다 자동으로 적을 공격합니다.
-   
+   ![Image](https://github.com/user-attachments/assets/27813417-3a83-49a7-8097-012f2b4413f5)
 </div>
 </details>
 
