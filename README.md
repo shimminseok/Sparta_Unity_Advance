@@ -32,7 +32,8 @@
 <details>
 <summary>기본 UI 구현(난이도: ★☆☆☆☆)</summary>
 <div markdown="1">
-토글 안에 넣을 이미지나 글
+- 게임 화면에 HP, MP, 경험치 바, 현재 스테이지, 골드 및 재화 등의 정보를 표시합니다.
+ 
 </div>
 </details>
 
