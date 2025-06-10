@@ -51,6 +51,7 @@
 <details>
 <summary>아이템 및 업그레이드 시스템 (난이도: ★★★☆☆)</summary>
 <div markdown="1">
+ 
  ![Image](https://github.com/user-attachments/assets/44a300d3-ec31-4c8e-9334-528c046091ad)
 </div>
 </details>
@@ -58,28 +59,40 @@
 <details>
 <summary>게임 내 통화 시스템 (난이도: ★★★☆☆)</summary>
 <div markdown="1">
-토글 안에 넣을 이미지나 글
+
+- 게임 내에서 사용할 수 있는 가상의 통화 시스템입니다. 이 통화는 클릭이나 게임 내 활동을 통해 얻을 수 있습니다.
+- 스테이지 클리어시 일정량을 게임 재화를 얻을 수 있습니다.
+
 </div>
 </details>
 
 <details>
 <summary>아이템 및 장비 창 UI 구현 (난이도: ★★★☆☆)</summary>
 <div markdown="1">
-토글 안에 넣을 이미지나 글
+
+ - 화면의 버튼을 클릭하면 인벤토리 창이 열리고, 여기서 아이템을 장착하거나 사용할 수 있습니다.
+   ![Image](https://github.com/user-attachments/assets/59fce35f-c38b-4cc8-acb7-7b452a5df492)
 </div>
 </details>
 
 <details>
 <summary>스테이지 시스템 (난이도: ★★★★☆)</summary>
 <div markdown="1">
-토글 안에 넣을 이미지나 글
+
+- 다양한 스테이지를 구성하고, 플레이어가 원하는 스테이지를 선택하여 입장하는 기능입니다.
+  ![Image](https://github.com/user-attachments/assets/594979e8-674a-458e-90f9-c5199a97480d)
 </div>
 </details>
 
 <details>
 <summary>ScriptableObject를 이용한 데이터 관리 (난이도: ★★★★☆)</summary>
 <div markdown="1">
-토글 안에 넣을 이미지나 글
+
+![image](https://github.com/user-attachments/assets/99faa0ae-4697-4907-b8ad-191fd7b8da2a)
+![image](https://github.com/user-attachments/assets/92ce101d-db32-4219-ac62-eb8556d46a88)
+![image](https://github.com/user-attachments/assets/3155b9e1-b7e2-43af-9bb8-9d5bfd0ec7cc)
+![image](https://github.com/user-attachments/assets/f0f24774-8f19-4305-95b8-e6414078e2fb)
+
 </div>
 </details>
 
