@@ -8,7 +8,6 @@ public class StatManager : MonoBehaviour
 {
     public Dictionary<StatType, StatBase> Stats { get; private set; } = new Dictionary<StatType, StatBase>();
 
-
     private void Awake()
     {
     }
@@ -98,6 +97,9 @@ public class StatManager : MonoBehaviour
         {
             case StatType.MaxHp:
                 SyncCurrentWithMax(StatType.CurHp, stat);
+                break;
+            case StatType.MaxMp:
+                SyncCurrentWithMax(StatType.CurMp, stat);
                 break;
         }
 

@@ -20,6 +20,10 @@ public class EquipmentItemSlot : MonoBehaviour
         equipmentManager = GameManager.PlayerController.EquipmentManager;
     }
 
+    private void Start()
+    {
+    }
+
     private void EmptySlot()
     {
         equipmentItemEnhanceCountTxt.text = string.Empty;
