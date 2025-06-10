@@ -30,21 +30,21 @@
 
 ## 구현 사항
 <details>
-<summary>기본 UI 구현</summary>
+<summary>기본 UI 구현(난이도: ★☆☆☆☆)</summary>
 <div markdown="1">
 토글 안에 넣을 이미지나 글
 </div>
 </details>
 
 <details>
-<summary>플레이어 AI 시스템</summary>
+<summary>플레이어 AI 시스템 (난이도: ★★★☆☆)</summary>
 <div markdown="1">
 토글 안에 넣을 이미지나 글
 </div>
 </details>
 
 <details>
-<summary>아이템 및 업그레이드 시스템</summary>
+<summary>아이템 및 업그레이드 시스템 (난이도: ★★★☆☆)</summary>
 <div markdown="1">
 토글 안에 넣을 이미지나 글
 </div>
