@@ -99,7 +99,9 @@
 <details>
 <summary>파티클 시스템 (난이도: ★★☆☆☆)</summary>
 <div markdown="1">
-토글 안에 넣을 이미지나 글
+
+- 클릭이나 탭, 업그레이드 시 파티클이 발생됩니다.
+![Image](https://github.com/user-attachments/assets/8a42bd7c-a7f5-4fbd-94b6-62f0f7d99500)
 </div>
 </details>
 
