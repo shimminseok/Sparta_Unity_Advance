@@ -19,7 +19,7 @@ namespace PlayerStates
         {
         }
 
-        public void OnExit(PlayerController entity)
+        public void OnExit(PlayerController owner)
         {
         }
 
@@ -53,10 +53,15 @@ namespace PlayerStates
 
         public PlayerState CheckTransition(PlayerController owner)
         {
-            if (owner.Agent.remainingDistance <= owner.Agent.stoppingDistance)
-                return PlayerState.Attack;
-            else if (owner.Target == null || owner.Target.IsDead)
+            IDamageable target = owner.Target;
+
+            if (target == null || target.IsDead)
                 return PlayerState.Idle;
+
+            float distance = Vector3.Distance(owner.transform.position, target.Transform.position);
+
+            if (distance <= owner.StatManager.GetValue(StatType.AttackRange))
+                return PlayerState.Attack;
 
             return PlayerState.Move;
         }
@@ -66,10 +71,12 @@ namespace PlayerStates
     {
         private float attackTimer;
         private readonly float attackDelay;
+        private readonly float attackRange;
 
-        public AttackState(float atkSpd)
+        public AttackState(float atkSpd, float atkRange)
         {
             attackDelay = atkSpd;
+            attackRange = atkRange;
         }
 
         public void OnEnter(PlayerController owner)
@@ -97,13 +104,16 @@ namespace PlayerStates
 
         public PlayerState CheckTransition(PlayerController owner)
         {
-            if (owner.Target == null || owner.Target.IsDead)
+            IDamageable target = owner.Target;
+
+            if (target == null || target.IsDead)
                 return PlayerState.Idle;
-            else if (owner.Agent.remainingDistance > owner.Agent.stoppingDistance)
-                return PlayerState.Move;
 
+            float distance = Vector3.Distance(owner.transform.position, target.Transform.position);
 
-            return PlayerState.Attack;
+            return distance > owner.StatManager.GetValue(StatType.AttackRange)
+                ? PlayerState.Move
+                : PlayerState.Attack;
         }
     }
 }

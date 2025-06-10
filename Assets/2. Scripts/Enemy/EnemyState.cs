@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 namespace EnemyStates
 {
@@ -110,6 +111,30 @@ namespace EnemyStates
 
 
             return EnemyState.Attack;
+        }
+    }
+
+    public class DeadState : IState<EnemyController, EnemyState>
+    {
+        public void OnEnter(EnemyController owner)
+        {
+        }
+
+        public void OnUpdate(EnemyController owner)
+        {
+        }
+
+        public void OnFixedUpdate(EnemyController owner)
+        {
+        }
+
+        public void OnExit(EnemyController owner)
+        {
+        }
+
+        public EnemyState CheckTransition(EnemyController owner)
+        {
+            return EnemyState.Idle;
         }
     }
 }

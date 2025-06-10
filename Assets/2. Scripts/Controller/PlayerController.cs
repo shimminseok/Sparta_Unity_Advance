@@ -20,6 +20,9 @@ public class PlayerController : BaseController<PlayerController, PlayerState>, I
     protected override void Awake()
     {
         base.Awake();
+        PlayerTable playerTable = TableManager.Instance.GetTable<PlayerTable>();
+        PlayerSO    playerData  = playerTable.GetDataByID(1);
+        StatManager.Initialize(playerData);
         GameManager.Instance.SetPlayerController(this);
         EquipmentManager = GetComponent<EquipmentManager>();
         InputHandler = GetComponent<InputHandler>();
@@ -27,10 +30,8 @@ public class PlayerController : BaseController<PlayerController, PlayerState>, I
 
     protected override void Start()
     {
-        PlayerTable playerTable = TableManager.Instance.GetTable<PlayerTable>();
-        PlayerSO    playerData  = playerTable.GetDataByID(1);
-        StatManager.Initialize(playerData);
         AttackStat = StatManager.GetStat<CalculatedStat>(StatType.AttackPow);
+        Agent.stoppingDistance = StatManager.GetValue(StatType.AttackRange);
         base.Start();
     }
 
@@ -45,14 +46,14 @@ public class PlayerController : BaseController<PlayerController, PlayerState>, I
         {
             PlayerState.Idle   => new IdleState(),
             PlayerState.Move   => new MoveState(),
-            PlayerState.Attack => new AttackState(StatManager.GetValue(StatType.AttackSpd)),
+            PlayerState.Attack => new AttackState(StatManager.GetValue(StatType.AttackSpd), StatManager.GetValue(StatType.AttackRange)),
             _                  => null
         };
     }
 
     public override void Movement()
     {
-        if (Target != null)
+        if (Target != null && !Target.IsDead)
         {
             Agent.speed = StatManager.GetValue(StatType.MoveSpeed);
             Agent.SetDestination(Target.Transform.position);
@@ -93,17 +94,5 @@ public class PlayerController : BaseController<PlayerController, PlayerState>, I
     {
         IsDead = true;
         print($"플레이어 사망");
-    }
-
-
-    // 테스트
-    public void TakeDamage(float amount)
-    {
-        StatManager.Consume(StatType.CurHp, amount);
-        float curHp = StatManager.GetValue(StatType.CurHp);
-        if (curHp <= 0)
-        {
-            Daed();
-        }
     }
 }

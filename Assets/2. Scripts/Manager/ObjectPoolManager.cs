@@ -3,24 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum PoolType
-{
-}
 
 public class ObjectPoolManager : SceneOnlySingleton<ObjectPoolManager>
 {
     [SerializeField] private List<GameObject> poolObjectList = new List<GameObject>();
     private List<IPoolObject> pools = new List<IPoolObject>();
-    private Dictionary<PoolType, Queue<GameObject>> poolObjects = new Dictionary<PoolType, Queue<GameObject>>();
-    private Dictionary<PoolType, GameObject> registeredObj = new Dictionary<PoolType, GameObject>();
-    private Dictionary<PoolType, Transform> parentCache = new Dictionary<PoolType, Transform>();
+    private Dictionary<string, Queue<GameObject>> poolObjects = new Dictionary<string, Queue<GameObject>>();
+    private Dictionary<string, GameObject> registeredObj = new Dictionary<string, GameObject>();
+    private Dictionary<string, Transform> parentCache = new Dictionary<string, Transform>();
 
 #if UNITY_EDITOR
     public void AutoAssignObject()
     {
         poolObjectList.Clear();
         string[] guids =
-            UnityEditor.AssetDatabase.FindAssets("t:GameObject", new[] { "Assets/03.Prefabs/Pool" });
+            UnityEditor.AssetDatabase.FindAssets("t:GameObject", new[] { "Assets/3. Prefabs/Pool" });
 
         foreach (string guid in guids)
         {
@@ -29,9 +26,9 @@ public class ObjectPoolManager : SceneOnlySingleton<ObjectPoolManager>
 
             if (asset.TryGetComponent<IPoolObject>(out var poolObject))
             {
-                if (poolObject != null && !poolObjectList.Contains(poolObject.GameObject))
+                if (poolObject != null && !poolObjectList.Contains(asset))
                 {
-                    poolObjectList.Add(poolObject.GameObject);
+                    poolObjectList.Add(asset);
                 }
             }
         }
@@ -66,19 +63,18 @@ public class ObjectPoolManager : SceneOnlySingleton<ObjectPoolManager>
     /// <param name="poolSize"></param>
     public void CreatePool(IPoolObject iPoolObject, int poolSize)
     {
-        if (poolObjects.ContainsKey(iPoolObject.PoolType))
+        if (poolObjects.ContainsKey(iPoolObject.PoolID))
         {
-            Debug.LogWarning($"등록된 풀이 있습니다. : {iPoolObject.PoolType}");
+            Debug.LogWarning($"등록된 풀이 있습니다. : {iPoolObject.PoolID}");
             return;
         }
 
-        string     poolname   = iPoolObject.PoolType.ToString();
-        PoolType   poolType   = iPoolObject.PoolType;
+        string     poolname   = iPoolObject.PoolID;
         GameObject poolObject = iPoolObject.GameObject;
 
         Queue<GameObject> newPool   = new Queue<GameObject>();
         GameObject        parentObj = new GameObject(poolname) { transform = { parent = transform } };
-        parentCache[poolType] = parentObj.transform;
+        parentCache[poolname] = parentObj.transform;
 
         for (int i = 0; i < poolSize; i++)
         {
@@ -88,8 +84,8 @@ public class ObjectPoolManager : SceneOnlySingleton<ObjectPoolManager>
             newPool.Enqueue(obj);
         }
 
-        poolObjects[poolType] = newPool;
-        registeredObj[poolType] = poolObject;
+        poolObjects[poolname] = newPool;
+        registeredObj[poolname] = poolObject;
     }
 
     /// <summary>
@@ -97,12 +93,12 @@ public class ObjectPoolManager : SceneOnlySingleton<ObjectPoolManager>
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
-    public GameObject GetObject(PoolType poolType)
+    public GameObject GetObject(string poolId)
     {
-        string poolName = poolType.ToString();
-        if (!poolObjects.TryGetValue(poolType, out Queue<GameObject> pool))
+        string poolName = poolId.ToString();
+        if (!poolObjects.TryGetValue(poolId, out Queue<GameObject> pool))
         {
-            Debug.LogWarning($"등록된 풀이 없습니다. : {poolType}");
+            Debug.LogWarning($"등록된 풀이 없습니다. : {poolId}");
             return null;
         }
 
@@ -114,10 +110,10 @@ public class ObjectPoolManager : SceneOnlySingleton<ObjectPoolManager>
         }
         else
         {
-            GameObject prefab = registeredObj[poolType];
+            GameObject prefab = registeredObj[poolId];
             GameObject newObj = Instantiate(prefab);
             newObj.name = poolName;
-            newObj.transform.SetParent(parentCache[poolType]);
+            newObj.transform.SetParent(parentCache[poolId]);
             newObj.SetActive(true);
             return newObj;
         }
@@ -129,33 +125,40 @@ public class ObjectPoolManager : SceneOnlySingleton<ObjectPoolManager>
     /// <param name="obj"></param>
     /// <param name="returnTime"></param>
     /// <param name="action"></param>
-    public void ReturnObject(IPoolObject obj, float returnTime = 0, UnityAction action = null)
+    public void ReturnObject(GameObject obj, float returnTime = 0, UnityAction action = null)
     {
         StartCoroutine(DelayedReturnObject(obj, action, returnTime));
     }
 
-    private IEnumerator DelayedReturnObject(IPoolObject obj, UnityAction action, float returnTime)
+    private IEnumerator DelayedReturnObject(GameObject obj, UnityAction action, float returnTime)
     {
-        if (!poolObjects.ContainsKey(obj.PoolType))
+        if (!obj.TryGetComponent<IPoolObject>(out IPoolObject iPoolObject))
         {
-            Debug.LogWarning($"등록된 풀이 없습니다. : {obj.PoolType}");
-            CreatePool(obj, 1);
+            Debug.LogError("풀링 오브젝트가 아닙니다.");
+            yield break;
         }
 
-        yield return new WaitForSeconds(returnTime);
-        obj.GameObject.SetActive(false);
-        obj.GameObject.transform.position = Vector3.zero;
+        if (!poolObjects.ContainsKey(iPoolObject.PoolID))
+        {
+            Debug.LogWarning($"등록된 풀이 없습니다. : {iPoolObject.PoolID}");
+            CreatePool(iPoolObject, 1);
+        }
+
+        if (returnTime > 0)
+            yield return new WaitForSeconds(returnTime);
+        obj.SetActive(false);
+        obj.transform.position = Vector3.zero;
         action?.Invoke();
-        poolObjects[obj.PoolType].Enqueue(obj.GameObject);
-        obj.GameObject.transform.SetParent(parentCache[obj.PoolType]);
+        poolObjects[iPoolObject.PoolID].Enqueue(obj);
+        obj.transform.SetParent(parentCache[iPoolObject.PoolID]);
     }
 
 
-    public void RemovePool(PoolType poolType)
+    public void RemovePool(string poolId)
     {
-        Destroy(parentCache[poolType].gameObject);
-        parentCache.Remove(poolType);
-        poolObjects.Remove(poolType);
-        registeredObj.Remove(poolType);
+        Destroy(parentCache[poolId].gameObject);
+        parentCache.Remove(poolId);
+        poolObjects.Remove(poolId);
+        registeredObj.Remove(poolId);
     }
 }

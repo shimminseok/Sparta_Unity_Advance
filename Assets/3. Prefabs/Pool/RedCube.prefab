@@ -167,3 +167,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 561249f468b75e04090bd142bd46970a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  poolID: RedCube
+  poolSize: 5

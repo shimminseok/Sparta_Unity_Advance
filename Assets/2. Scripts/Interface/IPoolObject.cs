@@ -5,6 +5,8 @@ using UnityEngine;
 public interface IPoolObject
 {
     public GameObject GameObject { get; }
-    public PoolType   PoolType   { get; }
+    public string     PoolID     { get; }
     public int        PoolSize   { get; }
+
+    public void InitFromPool();
 }

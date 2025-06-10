@@ -44,3 +44,11 @@ public enum StatModifierType
     BuffPercent,
     Equipment
 }
+
+public enum Direction
+{
+    Forward,
+    Backward,
+    Left,
+    Right
+}

@@ -21,11 +21,11 @@ public class StatSlot : MonoBehaviour
     {
         if (stat is ResourceStat resStat)
         {
-            slotValue.text = $"{resStat.CurrentValue:N0} / {resStat.MaxValue:N0}";
+            slotValue.text = $"{Utility.ToCurrencyString(resStat.Value): N0} / {Utility.ToCurrencyString(resStat.MaxValue): N0}";
         }
         else
         {
-            slotValue.text = stat.Value.ToString("N1");
+            slotValue.text = $"${Utility.ToCurrencyString(stat.Value): N1}";
         }
     }
 }

@@ -14,9 +14,10 @@ public abstract class BaseController<TController, TState> : MonoBehaviour where 
     public StatManager         StatManager         { get; private set; }
     public StatusEffectManager StatusEffectManager { get; private set; }
     public NavMeshAgent        Agent               { get; private set; }
+
     private StateMachine<TController, TState> stateMachine;
     private IState<TController, TState>[] states;
-    public TState CurrentState { get; private set; }
+    protected TState CurrentState;
 
     protected virtual void Awake()
     {
@@ -57,7 +58,7 @@ public abstract class BaseController<TController, TState> : MonoBehaviour where 
     }
 
 
-    private void ChangeState(TState newState)
+    protected void ChangeState(TState newState)
     {
         stateMachine.ChangeState(states[Convert.ToInt32(newState)]);
         CurrentState = newState;

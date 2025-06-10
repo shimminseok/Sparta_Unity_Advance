@@ -16,11 +16,7 @@ public abstract class BaseTable<TKey, TValue> : ScriptableObject, ITable where T
 
     public TValue GetDataByID(TKey id)
     {
-        if (DataDic.TryGetValue(id, out TValue value))
-            return value;
-
-        Debug.LogError($"ID {id}를 찾을 수 없습니다. Type :{Type})");
-        return default;
+        return DataDic.GetValueOrDefault(id);
     }
 
 #if UNITY_EDITOR

@@ -16,32 +16,24 @@ public class EnemyManager : SceneOnlySingleton<EnemyManager>
     private void Start()
     {
         monsterTb = TableManager.Instance.GetTable<MonsterTable>();
-        SpawnEnemy(5);
     }
 
 
-    public void SpawnEnemy(int enemyCnt)
+    public void SpawnEnemy(MonsterSO monsterSo, Vector3 spawnPos)
     {
-        for (int i = 0; i < enemyCnt; i++)
-        {
-            var        randomCircle = Random.insideUnitCircle * 15f;
-            var        spawnPos     = new Vector3(randomCircle.x, 1f, randomCircle.y);
-            MonsterSO  monsterSo    = monsterTb.GetDataByID(Random.Range(1, monsterTb.DataDic.Count + 1));
-            GameObject go           = Instantiate(monsterSo.Prefab, spawnPos, Quaternion.identity);
-            var        controller   = go.GetComponent<EnemyController>();
-            controller.StatManager.Initialize(monsterSo);
-            Enemies.Add(controller);
-        }
+        GameObject go         = ObjectPoolManager.Instance.GetObject(monsterSo.Prefab.name);
+        var        controller = go.GetComponent<EnemyController>();
+        controller.SpawnMonster(monsterSo, spawnPos);
+        Enemies.Add(controller);
     }
 
     public void MonsterDead(EnemyController enemy)
     {
         Enemies.Remove(enemy);
-        Destroy(enemy.gameObject);
+        ObjectPoolManager.Instance.ReturnObject(enemy.gameObject);
         if (Enemies.Count == 0)
         {
-            //다음 스테이지
-            SpawnEnemy(5);
+            StageManager.Instance.WaveClear();
         }
     }
 

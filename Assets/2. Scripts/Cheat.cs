@@ -46,11 +46,6 @@ public class Cheat : MonoBehaviour
                 }
             }
         }
-
-        if (GUI.Button(new Rect(x, y - (buttonHeight + spacing) * 2, buttonWidth, buttonHeight), "대미지"))
-        {
-            gameManager.PlayerController.TakeDamage(30);
-        }
 #endif
     }
 }
