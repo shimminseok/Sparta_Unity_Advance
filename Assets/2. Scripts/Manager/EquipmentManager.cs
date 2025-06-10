@@ -1,19 +1,26 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 
 public class EquipmentItem : InventoryItem
 {
     public bool IsEquipped;
-    public InventorySlot LinkedSlot;
     public int EnhanceLevel;
+
+    public InventorySlot LinkedSlot;
+
     public new EquipmentItemSO ItemSo => base.ItemSo as EquipmentItemSO;
 
     public EquipmentItem(EquipmentItemSO itemSo, InventorySlot linkedSlot = null) : base(itemSo, 1)
     {
         IsEquipped = false;
         LinkedSlot = linkedSlot;
+    }
+
+    public EquipmentItem()
+    {
     }
 
     public override InventoryItem Clone() => new EquipmentItem(ItemSo);
@@ -70,7 +77,6 @@ public class EquipmentManager : MonoBehaviour
         if (!EquipmentItems.TryGetValue(type, out var item) || item == null)
             return;
 
-        // InventoryManager.Instance.AddItem(item.ItemSo);
         foreach (StatData stat in item.ItemSo.Stats)
         {
             gameManager.PlayerController.StatManager.ApplyStatEffect(stat.StatType, StatModifierType.Equipment, -stat.Value);

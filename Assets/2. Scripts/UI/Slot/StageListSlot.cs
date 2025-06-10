@@ -9,18 +9,18 @@ public class StageListSlot : MonoBehaviour
     [SerializeField] private GameObject lockImg;
     [SerializeField] private GameObject selectedImg;
 
-    private StageSO stageSo;
+    public StageSO StageSo { get; private set; }
 
     public void SetSlot(StageSO stageData)
     {
-        stageSo = stageData;
+        StageSo = stageData;
         stageName.text = stageData.StageName;
-        lockImg.SetActive(stageSo.ID > AccountManager.Instance.BestStage);
+        lockImg.SetActive(StageSo.ID > AccountManager.Instance.BestStage);
     }
 
     public void Refresh()
     {
-        lockImg.SetActive(stageSo.ID > AccountManager.Instance.BestStage);
+        lockImg.SetActive(StageSo.ID > AccountManager.Instance.BestStage);
     }
 
     public void DeSelect()

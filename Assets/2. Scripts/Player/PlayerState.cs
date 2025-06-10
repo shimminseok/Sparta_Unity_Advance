@@ -27,6 +27,11 @@ namespace PlayerStates
         {
             if (owner.Target != null)
                 return PlayerState.Move;
+            else if (owner.Agent.isOnNavMesh)
+            {
+                if (owner.Agent.remainingDistance > owner.Agent.stoppingDistance)
+                    return PlayerState.Move;
+            }
 
             return PlayerState.Idle;
         }

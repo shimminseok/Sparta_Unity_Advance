@@ -40,13 +40,27 @@ public class MapGenerator : SceneOnlySingleton<MapGenerator>
     private StageSO currentStage;
 
     private Queue<GameObject> spawnedMaps = new Queue<GameObject>();
+    private List<GameObject> spawnedObstacles = new List<GameObject>();
 
     private void Start()
     {
-        GenerateStage();
+        StageManager.Instance.OnEnterStage += ResetMap;
     }
 
-    public void GenerateStage()
+    public void ResetMap()
+    {
+        while (spawnedMaps.Count > 0)
+        {
+            ObjectPoolManager.Instance.ReturnObject(spawnedMaps.Dequeue());
+        }
+
+        lastChunkPosition = Vector3.zero;
+        currentDir = Direction.Forward;
+        spawnedObstacles.ForEach(Destroy);
+        spawnedMaps.Clear();
+    }
+
+    public void GenerateStage(StageSO stage)
     {
         usedPositions.Clear();
         GameObject map = ObjectPoolManager.Instance.GetObject("Map");
@@ -55,15 +69,14 @@ public class MapGenerator : SceneOnlySingleton<MapGenerator>
         currentChunkPlane.SetParent(mapChunkParent.transform);
         currentChunkPlane.position = lastChunkPosition;
         currentChunkPlane.localScale = Vector3.one * 5f;
-        currentStage = StageManager.GetCurrentStage();
+        currentStage = stage;
         SpawnObjects(obstaclePrefabs, obstacleCount);
-        if (spawnedMaps.Count > 2)
+        if (spawnedMaps.Count > 3)
         {
             ObjectPoolManager.Instance.ReturnObject(spawnedMaps.Dequeue());
         }
 
         mapChunkParent.BuildNavMesh();
-        StartCoroutine(SpawnEnemies(currentStage.MonsterCount));
     }
 
     public void NextWave()
@@ -84,7 +97,8 @@ public class MapGenerator : SceneOnlySingleton<MapGenerator>
             agent.SetDestination(targetPos);
         }
 
-        GenerateStage();
+        GenerateStage(currentStage);
+        StartCoroutine(SpawnEnemies(currentStage.MonsterCount));
     }
 
     private void SpawnObjects(List<GameObject> prefabList, int count)
@@ -96,12 +110,12 @@ public class MapGenerator : SceneOnlySingleton<MapGenerator>
                 continue;
 
             GameObject prefab = prefabList[Random.Range(0, prefabList.Count)];
-            Instantiate(prefab, spawnPos, Quaternion.identity, transform);
+            spawnedObstacles.Add(Instantiate(prefab, spawnPos, Quaternion.identity, transform));
             usedPositions.Add(spawnPos);
         }
     }
 
-    private IEnumerator SpawnEnemies(int count)
+    public IEnumerator SpawnEnemies(int count)
     {
         yield return new WaitUntil(() => StageManager.Instance.IsWaveStart);
         for (int i = 0; i < count; i++)

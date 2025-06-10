@@ -53,9 +53,9 @@ public class PlayerController : BaseController<PlayerController, PlayerState>, I
 
     public override void Movement()
     {
+        Agent.speed = StatManager.GetValue(StatType.MoveSpeed);
         if (Target != null && !Target.IsDead)
         {
-            Agent.speed = StatManager.GetValue(StatType.MoveSpeed);
             Agent.SetDestination(Target.Transform.position);
         }
     }
@@ -81,6 +81,7 @@ public class PlayerController : BaseController<PlayerController, PlayerState>, I
             Target = attacker as IDamageable;
 
 
+        GameManager.Instance.MainCameraShake();
         StatManager.Consume(StatType.CurHp, attacker.AttackStat.Value);
 
         float curHp = StatManager.GetValue(StatType.CurHp);

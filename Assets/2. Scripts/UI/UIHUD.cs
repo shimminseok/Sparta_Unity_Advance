@@ -23,6 +23,8 @@ public class UIHUD : MonoBehaviour
         playerStatManager.Stats[StatType.CurMp].OnValueChanged += UpdateMpUIWrapper;
 
         AccountManager.Instance.OnGoldChanged += UpdateGoldUI;
+
+        UpdateGoldUI(AccountManager.Instance.Gold);
     }
 
     private void UpdateHpUI(float cur, float max)

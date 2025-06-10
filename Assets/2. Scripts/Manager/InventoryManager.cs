@@ -9,6 +9,10 @@ public class InventoryItem
     public ItemSO ItemSo;
     public int Quantity;
 
+    public InventoryItem()
+    {
+    }
+
     public InventoryItem(ItemSO itemSo, int quantity)
     {
         ItemSo = itemSo;
@@ -28,6 +32,23 @@ public class InventoryItem
     public void ItemChanged()
     {
         OnItemChanged?.Invoke();
+    }
+}
+
+[Serializable]
+public class SaveInventoryItem
+{
+    public int Id;
+    public int Quantity;
+
+    public SaveInventoryItem(InventoryItem item)
+    {
+        Id = item.ItemSo.ID;
+        Quantity = item.Quantity;
+    }
+
+    public SaveInventoryItem()
+    {
     }
 }
 
@@ -133,9 +154,6 @@ public class InventoryManager : SceneOnlySingleton<InventoryManager>
         item.ChangeQuantity(-amount);
         if (item.Quantity <= 0)
             RemoveItem(index);
-
-
-        // OnInventorySlotUpdate?.Invoke(index);
     }
 
     public void DropItem(int index, int amount)

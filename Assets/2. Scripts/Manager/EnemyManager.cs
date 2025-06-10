@@ -16,6 +16,7 @@ public class EnemyManager : SceneOnlySingleton<EnemyManager>
     private void Start()
     {
         monsterTb = TableManager.Instance.GetTable<MonsterTable>();
+        StageManager.Instance.OnEnterStage += RemoveAllEnemies;
     }
 
 
@@ -35,6 +36,14 @@ public class EnemyManager : SceneOnlySingleton<EnemyManager>
         {
             StageManager.Instance.WaveClear();
         }
+    }
+
+    public void RemoveAllEnemies()
+    {
+        foreach (var enemy in Enemies)
+            ObjectPoolManager.Instance.ReturnObject(enemy.gameObject);
+
+        Enemies.Clear();
     }
 
     protected override void OnDestroy()

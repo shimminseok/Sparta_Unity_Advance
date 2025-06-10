@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "RewardSO", menuName = "ScriptableObject/RewardSO", order = 0)]
@@ -16,5 +17,12 @@ public class RewardSO : ScriptableObject
     [BoolShowIf("HasRewardExp")]
     public int RewardExp;
 
-    public List<ItemSO> RewardItems;
+    public List<RewardItemData> RewardItems;
+}
+
+[Serializable]
+public class RewardItemData
+{
+    public ItemSO Item;
+    public int Quantity;
 }

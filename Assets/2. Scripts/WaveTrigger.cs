@@ -12,15 +12,19 @@ public class WaveTrigger : MonoBehaviour, IPoolObject
     public string     PoolID     => poolID;
     public int        PoolSize   => poolSize;
 
+    private void OnEnable()
+    {
+        InitFromPool();
+    }
+
     public void InitFromPool()
     {
         transform.position = Vector3.zero;
+        triggered = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.name);
-
         if (triggered || !other.gameObject.CompareTag("Player"))
             return;
 

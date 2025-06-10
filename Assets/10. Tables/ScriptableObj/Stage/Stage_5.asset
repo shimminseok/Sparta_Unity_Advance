@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 1010105
   StageName: "\uC2A4\uD14C\uC774\uC9C0 5"
-  WaveCount: 3
+  WaveCount: 5
   MonsterCount: 5
   Reward: {fileID: 11400000, guid: 2514b5b05bf113342837e0498bcb05a4, type: 2}
   Monsters:

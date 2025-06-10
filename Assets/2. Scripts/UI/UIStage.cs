@@ -46,6 +46,11 @@ public class UIStage : UIBase<UIStage>, IUIBase
         selectedStage.Select();
     }
 
+    public void OnClickEnterStageBtn()
+    {
+        StageManager.EnterStage(selectedStage.StageSo.ID);
+    }
+
     public override void Open()
     {
         base.Open();

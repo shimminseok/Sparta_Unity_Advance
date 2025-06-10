@@ -22,7 +22,7 @@ public class AccountManager : Singleton<AccountManager>
 
     private void TryUnlockNextStage(int clearID)
     {
-        if (clearID == BestStage)
+        if (clearID >= BestStage)
         {
             BestStage = GetNextStageID(clearID);
         }
