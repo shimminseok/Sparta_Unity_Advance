@@ -14,7 +14,7 @@
 - `Assets/6. Material` – 머티리얼 리소스
 - `Assets/10. Tables` – 스크립터블 오브젝트 기반 테이블 데이터
 
-+## 시작하기
+## 시작하기
 1. Unity Hub에서 본 프로젝트 폴더를 열어 `MainScene.unity` 혹은 `SampleScene.unity`을 실행합니다.
 2. 처음 열 때 필요한 패키지 의존성(URP, Cinemachine 등)을 내려받도록 Unity 패키지 매니저를 실행합니다.
 
