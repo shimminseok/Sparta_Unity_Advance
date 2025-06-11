@@ -8,9 +8,6 @@ public class StatManager : MonoBehaviour
 {
     public Dictionary<StatType, StatBase> Stats { get; private set; } = new Dictionary<StatType, StatBase>();
 
-    private void Awake()
-    {
-    }
 
     /// <summary>
     /// 플레이어의 스탯을 초기화 시켜주는 메서드
@@ -36,6 +33,12 @@ public class StatManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Stat을 생성해주는 팩토리
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
     private StatBase BaseStatFactory(StatType type, float value)
     {
         return type switch
@@ -81,6 +84,12 @@ public class StatManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 증가되는 스탯에 따라 해당 스탯을 증감시켜주는 메서드
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="valueType"></param>
+    /// <param name="value"></param>
     public void ApplyStatEffect(StatType type, StatModifierType valueType, float value)
     {
         if (Stats[type] is not CalculatedStat stat) return;
@@ -106,6 +115,11 @@ public class StatManager : MonoBehaviour
         Debug.Log($"Stat : {type} Modify Value {value}, FinalValue : {stat.Value}");
     }
 
+    /// <summary>
+    /// ResourceStat의 Max값을 동기화 시켜주는 메서드
+    /// </summary>
+    /// <param name="curStatType"></param>
+    /// <param name="stat"></param>
     private void SyncCurrentWithMax(StatType curStatType, CalculatedStat stat)
     {
         if (Stats.TryGetValue(curStatType, out var res) && res is ResourceStat curStat)

@@ -40,6 +40,11 @@ public class PlayerController : BaseController<PlayerController, PlayerState>, I
         base.Update();
     }
 
+    /// <summary>
+    /// 플레이어의 State를 생성해주는 팩토리 입니다.
+    /// </summary>
+    /// <param name="state"></param>
+    /// <returns></returns>
     protected override IState<PlayerController, PlayerState> GetState(PlayerState state)
     {
         return state switch

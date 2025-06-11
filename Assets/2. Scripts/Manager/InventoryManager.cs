@@ -176,17 +176,6 @@ public class InventoryManager : SceneOnlySingleton<InventoryManager>
         OnInventorySlotUpdate?.Invoke(to);
     }
 
-    public InventoryItem GetInventoryItemAtSlot(int index)
-    {
-        return Inventory[index];
-    }
-
-    public InventoryItem FindByItemInstance(InventoryItem item)
-    {
-        return Inventory.Find(x => x != null && x == item);
-    }
-
-
     protected override void OnDestroy()
     {
         base.OnDestroy();
