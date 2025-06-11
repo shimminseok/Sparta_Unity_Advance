@@ -109,7 +109,7 @@ public class GameManager : Singleton<GameManager>
             SaveFile = JsonConvert.DeserializeObject<SaveFile>(decrypted);
 
             AccountManager.Instance.AddGold(SaveFile.Gold);
-            AccountManager.Instance.UpdateBestStage(SaveFile.BestStage);
+            AccountManager.Instance.SetBestStage(SaveFile.BestStage);
             StageManager.Instance.LoadStageData(SaveFile.CurrentStage);
             var ItemTable = TableManager.Instance.GetTable<ItemTable>();
             foreach (SaveInventoryItem item in SaveFile.InventoryItems)

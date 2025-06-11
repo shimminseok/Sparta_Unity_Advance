@@ -20,9 +20,14 @@ public class AccountManager : Singleton<AccountManager>
         TryUnlockNextStage(currentStage);
     }
 
+    public void SetBestStage(int currentStage)
+    {
+        BestStage = currentStage;
+    }
+
     private void TryUnlockNextStage(int clearID)
     {
-        if (clearID >= BestStage)
+        if (clearID == BestStage)
         {
             BestStage = GetNextStageID(clearID);
         }

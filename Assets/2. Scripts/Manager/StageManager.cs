@@ -12,6 +12,7 @@ public class StageManager : SceneOnlySingleton<StageManager>
     public int  CurrentWave  { get; private set; } = 1;
 
     public event Action OnEnterStage;
+    public event Action OnWaveClear;
 
     protected override void Awake()
     {
@@ -26,9 +27,9 @@ public class StageManager : SceneOnlySingleton<StageManager>
     public void EnterStage(int stage)
     {
         CurrentWave = 1;
-        OnEnterStage?.Invoke();
         GameManager.Instance.PlayerController.Agent.Warp(Vector3.up);
         CurrentStage = stage;
+        OnEnterStage?.Invoke();
         MapGenerator.Instance.GenerateStage(GetCurrentStage());
         UIManager.Instance.FadeIn(3, () =>
         {
@@ -55,6 +56,8 @@ public class StageManager : SceneOnlySingleton<StageManager>
         {
             MapGenerator.Instance.NextWave();
         }
+
+        OnWaveClear?.Invoke();
     }
 
     public void SpawnWave()

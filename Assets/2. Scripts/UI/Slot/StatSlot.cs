@@ -25,7 +25,7 @@ public class StatSlot : MonoBehaviour
         }
         else
         {
-            slotValue.text = $"${Utility.ToCurrencyString(stat.Value): N1}";
+            slotValue.text = $"{Utility.ToCurrencyString(stat.Value): N1}";
         }
     }
 }
